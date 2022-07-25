@@ -7,7 +7,7 @@ use App\Http\Requests\Auth\RegisteredUserRequest;
 use App\Services\Auth\RegisterUserService;
 use Illuminate\Support\Facades\Auth;
 
-class RegisteredUserController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Handle an incoming registration request.
