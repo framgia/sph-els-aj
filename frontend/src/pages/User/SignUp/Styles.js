@@ -1,4 +1,5 @@
-import { Box, Avatar, Button, styled } from "@mui/material";
+import { Box, Avatar, styled } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 export const CustomBox = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(8),
@@ -16,7 +17,7 @@ export const FormBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(3),
 }));
 
-export const SignUpBtn = styled(Button)(({ theme }) => ({
+export const SignUpBtn = styled(LoadingButton)(({ theme }) => ({
   marginTop: theme.spacing(3),
   marginBottom: theme.spacing(2),
 }));
