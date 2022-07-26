@@ -1,7 +1,3 @@
-import { School } from "@mui/icons-material";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-
 import {
   Paper,
   CssBaseline,
@@ -10,6 +6,10 @@ import {
   Container,
   Grid,
 } from "@mui/material";
+import { School } from "@mui/icons-material";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "../../../hooks/auth";
 import { CustomBox, CustomAvatar, FormBox, SignUpBtn } from "./Styles";
 import { schema } from "./FormSchema";
 
