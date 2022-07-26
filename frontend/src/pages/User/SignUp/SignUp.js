@@ -14,16 +14,24 @@ import { CustomBox, CustomAvatar, FormBox, SignUpBtn } from "./Styles";
 import { schema } from "./FormSchema";
 
 export default function SignIn() {
+  const { registerUser, loading, setLoading } = useAuth({
+    middleware: "guest",
+    redirectIfAuthenticated: "/dashboard",
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    setLoading(true);
+    registerUser({ setError, clearErrors, data });
   };
 
   return (
@@ -63,7 +71,6 @@ export default function SignIn() {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
               error={!!errors?.email}
               {...register("email")}
               helperText={errors?.email ? errors.email.message : null}
@@ -72,11 +79,11 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              id="password"
               label="Password"
               type="password"
-              id="password"
-              autoComplete="current-password"
+              name="password"
+              autoComplete="password"
               error={!!errors?.password}
               {...register("password")}
               helperText={errors?.password ? errors.password.message : null}
@@ -85,18 +92,25 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              name="confirmPassword"
+              name="password_confirmation"
               label="Confirm Password"
               type="password"
               id="confirm-password"
-              autoComplete="cofirm-password"
-              {...register("confirmPassword")}
+              autoComplete="cofirm-password   "
+              {...register("password_confirmation")}
               helperText={
-                errors?.confirmPassword ? "Passwords should match!" : null
+                errors?.password_confirmation
+                  ? "The password field should match!"
+                  : null
               }
-              error={!!errors?.confirmPassword}
+              error={!!errors?.password_confirmation}
             />
-            <SignUpBtn type="submit" fullWidth variant="contained">
+            <SignUpBtn
+              type="submit"
+              fullWidth
+              variant="contained"
+              loading={loading}
+            >
               Sign In
             </SignUpBtn>
             <Grid container justifyContent="center" alignItems="center">
