@@ -5,32 +5,54 @@ import {
   Link,
   TextField,
   CssBaseline,
-  Button,
   Avatar,
   Paper,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { Link as RouterLink } from "react-router-dom";
 import { School } from "@mui/icons-material";
 import { LeftGrid } from "./Styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./FormSchema";
+import MessageDialog from "../../../components/MessageDialog";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../hooks/auth";
 
-export default function SignInSide() {
+export default function Login() {
+  const { loginUser, loading, setLoading, errorMessage, errorStatus } = useAuth(
+    {
+      middleware: "guest",
+      redirectIfAuthenticated: true,
+    }
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // clearErrors, TODO: To be used in another task
-    // setError, TODO: To be used in another task
+    clearErrors,
+    setError,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Will remove in another task
+    setLoading(true);
+    setOpenMessageDialog(false);
+    loginUser({ setError, clearErrors, data });
   };
+
+  const handleClose = (value) => {
+    setOpenMessageDialog(value);
+  };
+  const [openMessageDialog, setOpenMessageDialog] = useState(false);
+
+  useEffect(() => {
+    if (errorStatus !== -1 && errorStatus !== 422) {
+      setOpenMessageDialog(true);
+    }
+  }, [errorStatus]);
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -56,7 +78,6 @@ export default function SignInSide() {
             flexDirection: "column",
             alignItems: "center",
             alignContent: "center",
-            flexWrap: "wrap",
           }}
         >
           <Box
@@ -91,7 +112,7 @@ export default function SignInSide() {
               autoFocus
               error={!!errors?.email}
               {...register("email")}
-              helperText={errors?.email ? "The " + errors.email.message : null}
+              helperText={errors?.email ? errors.email.message : null}
             />
             <TextField
               margin="normal"
@@ -102,20 +123,21 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
-              error={!!errors?.email}
+              error={!!errors?.password}
               {...register("password")}
               helperText={
                 errors?.password ? "The " + errors.password.message : null
               }
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
+              loading={loading}
               sx={{ mt: 3, mb: 2 }}
             >
               Login
-            </Button>
+            </LoadingButton>
             <Grid container>
               <Grid item>
                 <Link component={RouterLink} to="/sign-up" variant="body2">
@@ -126,6 +148,13 @@ export default function SignInSide() {
           </Box>
         </Box>
       </Grid>
+      <MessageDialog
+        message={errorMessage}
+        open={openMessageDialog}
+        severity="error"
+        onClose={handleClose}
+        autoHideDuration={3000}
+      />
     </Grid>
   );
 }

@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('user', UserController::class)->except(['store']);
 
+// ADD: PROTECTION TO API
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResource('user', UserController::class)->except(['store']);
+});

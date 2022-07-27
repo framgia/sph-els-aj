@@ -18,10 +18,10 @@ import { schema } from "./FormSchema";
 import MessageDialog from "../../../components/MessageDialog";
 import { useEffect, useState } from "react";
 
-export default function SignIn() {
-  const { registerUser, loading, setLoading, errorMessage, isError } = useAuth({
+export default function SignUp() {
+  const { registerUser, loading, setLoading, errorMessage, errorStatus } = useAuth({
     middleware: "guest",
-    redirectIfAuthenticated: "/dashboard",
+    redirectIfAuthenticated: true,
   });
 
   const {
@@ -36,19 +36,20 @@ export default function SignIn() {
 
   const onSubmit = (data) => {
     setLoading(true);
+    setOpenMessageDialog(false);
     registerUser({ setError, clearErrors, data });
   };
+  const [openMessageDialog, setOpenMessageDialog] = useState(false);
 
   const handleClose = (value) => {
     setOpenMessageDialog(value);
   };
-  const [openMessageDialog, setOpenMessageDialog] = useState(false);
 
   useEffect(() => {
-    if (isError) {
+    if (errorStatus !== -1 && errorStatus !== 422) {
       setOpenMessageDialog(true);
     }
-  }, [isError]);
+  }, [errorStatus]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -138,7 +139,7 @@ export default function SignIn() {
             </SignUpBtn>
             <Grid container justifyContent="center" alignItems="center">
               <Grid item>
-                <Link component={RouterLink} to="/" variant="body2">
+                <Link component={RouterLink} to="/login" variant="body2">
                   {"Already have an account? Login"}
                 </Link>
               </Grid>
@@ -151,6 +152,7 @@ export default function SignIn() {
         open={openMessageDialog}
         severity="error"
         onClose={handleClose}
+        autoHideDuration={3000}
       />
     </Container>
   );

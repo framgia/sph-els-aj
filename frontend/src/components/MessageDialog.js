@@ -20,7 +20,6 @@ const MessageDialog = ({
   };
 
   useEffect(() => {
-    console.log("Use Effect: ", open);
     setOpenSnackBar(open);
   }, [open]);
 

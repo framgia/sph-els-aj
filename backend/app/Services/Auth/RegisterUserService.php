@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterUserService
 {
@@ -12,9 +13,12 @@ class RegisterUserService
         $this->info = array(
             'name' => $user['name'],
             'email' => $user['email'],
-            'type_id' => $user['type_id'],
             'password' => bcrypt($user['password']),
         );
+
+        if (array_key_exists('type_id', $user)) {
+            $this->info['type_id'] = $user['type_id'];
+        }
     }
 
     public function register() : void
@@ -24,6 +28,8 @@ class RegisterUserService
         // Store a default avatar
         $this->user->addMedia(public_path('avatar\default.png'))
             ->preservingOriginal()->toMediaCollection('avatar');
+        
+        Auth::login($this->user);
 
         event(new Registered($this->user));
     }
