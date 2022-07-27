@@ -21,8 +21,8 @@ export default function SignInSide() {
     register,
     handleSubmit,
     formState: { errors },
-    // clearErrors,
-    // setError,
+    // clearErrors, TODO: To be used in another task
+    // setError, TODO: To be used in another task
   } = useForm({
     resolver: yupResolver(schema),
   });
