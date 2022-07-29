@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\API\User\UserController;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
-    return $request->user();
+    return new UserResource(User::with(['type', 'avatar'])->find($request->user()->id));
 });
 
 // ADD: PROTECTION TO API

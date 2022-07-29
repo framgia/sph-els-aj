@@ -33,7 +33,7 @@ const RequireAuth = ({ role }) => {
 
   return (
     user &&
-    (user.type_id === role ? (
+    (user?.type?.id === role ? (
       <Outlet />
     ) : user ? (
       <Navigate to="/unauthorized" state={{ from: location }} replace />

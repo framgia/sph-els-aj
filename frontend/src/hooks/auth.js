@@ -31,13 +31,20 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     data: user,
     error,
     mutate,
-  } = useSWR("/api/auth", () =>
-    axios
-      .get("/api/auth")
-      .then((res) => res.data)
-      .catch((error) => {
-        if (error.response.status !== 409) throw error;
-      })
+  } = useSWR(
+    "/api/auth",
+    () =>
+      axios
+        .get("/api/auth")
+        .then((res) => res.data)
+        .catch((error) => {
+          if (error.response.status !== 409) throw error;
+        }),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   const csrf = () => axios.get("sanctum/csrf-cookie");
@@ -73,7 +80,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
   useEffect(() => {
     if (middleware === "guest" && redirectIfAuthenticated && user) {
-      let route = user.type_id === 1 ? "/admin" : "/dashboard";
+      let route = user?.type?.id === 1 ? "/admin/users" : "/dashboard";
       navigate(route, { replace: true, state: { user: user } });
     }
     if (middleware === "auth" && error) logout();
