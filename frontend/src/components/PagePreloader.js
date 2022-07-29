@@ -1,4 +1,5 @@
 import GridLoader from "react-spinners/GridLoader";
+
 import '../App.css';
 
 const PagePreloader = ({ loading, size = 150 }) => {

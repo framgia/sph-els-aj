@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "../lib/axios";
 import useSWR from "swr";
 import { useNavigate } from "react-router-dom";
+
+import axios from "../lib/axios";
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
   const [loading, setLoading] = useState();

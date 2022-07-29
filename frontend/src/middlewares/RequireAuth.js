@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Navigate, Outlet } from "react-router-dom";
 import axios from "../lib/axios";
+
 import PagePreloader from "../components/PagePreloader";
 
 const RequireAuth = ({ role }) => {
@@ -15,7 +16,6 @@ const RequireAuth = ({ role }) => {
       setLoading(true);
       const res = await axios.get("/api/auth");
       setUser(res.data);
-      console.log(res.data);
     } catch (error) {
       if (error.response.status === 401) {
         navigate("/login", { replace: true });

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Typography,
   Box,
@@ -9,14 +11,16 @@ import {
   Paper,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { Link as RouterLink } from "react-router-dom";
 import { School } from "@mui/icons-material";
 import { LeftGrid } from "./Styles";
+
+import { Link as RouterLink } from "react-router-dom";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./FormSchema";
+
 import MessageDialog from "../../../components/MessageDialog";
-import { useEffect, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 
 export default function Login() {
