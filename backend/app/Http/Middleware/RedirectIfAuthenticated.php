@@ -23,8 +23,11 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
-                return Auth::guard($guard)->check(); 
+                // FIX: Had to comment 2 lines below as it was redirecting me the
+                // home page which is not existing and causes a 404 NOT FOUND error
+
+                // return redirect(RouteServiceProvider::HOME);
+                // return Auth::guard($guard)->check(); 
             }
         }
 
