@@ -5,7 +5,7 @@ import SignUp from "./pages/User/SignUp/SignUp";
 import Login from "./pages/User/Login/Login";
 import UserDashboard from "./pages/User/UserDashboard";
 import Unauthorized from "./pages/Unauthorized";
-import Users from "./pages/Admin/Users";
+import Users from "./pages/Admin/Users/Users";
 import Categories from "./pages/Admin/Categories";
 import Questions from "./pages/Admin/Questions";
 import { Roles } from "./utils/RoleConstants";
