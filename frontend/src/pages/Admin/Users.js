@@ -9,6 +9,8 @@ const Users = () => {
 
   return (
     <AdminLayout navTitle="User List">
+      {/* TODO: This will serve as the content for now, but will be
+      removing in another task */}
       {!user ? (
         <PagePreloader loading={!user} size={30} />
       ) : (
