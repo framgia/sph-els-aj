@@ -28,7 +28,6 @@ export default function UserTable() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log(parseInt(event.target.value, 10));
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
