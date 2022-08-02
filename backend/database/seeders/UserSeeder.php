@@ -35,5 +35,6 @@ class UserSeeder extends Seeder
         $admin->register();
         $user = new RegisterUserService($users[1]);
         $user->register();
+        User::factory()->count(8)->create();
     }
 }
