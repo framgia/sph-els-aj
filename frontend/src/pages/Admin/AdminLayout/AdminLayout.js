@@ -43,18 +43,17 @@ function Layout({ children, navTitle }) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
+            <Grid container>
+              <Grid item xs={12} md={12} lg={12}>
+                <Box
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: 240,
                   }}
                 >
                   {children}
-                </Paper>
+                </Box>
               </Grid>
             </Grid>
           </Container>
