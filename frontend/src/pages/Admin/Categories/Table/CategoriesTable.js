@@ -4,12 +4,11 @@ import MaterialTable from "material-table";
 
 import { tableIcons } from "../../../../utils/TableIcons";
 import AddCategoryButton from "./AddCategoryButton";
+import { useCategories } from "../../../../hooks/categories";
 
-/* TODO: As of now the content has static data.
-    Will Fetch the data from the API 
-    in [BE/FE] Fetch Data to Category List Task.
-*/
 const CategoriesTable = () => {
+  const { categories, loading } = useCategories();
+
   const onDelete = (data) => {
     /* TODO: Will Provide functionality in 
     [BE/FE] Delete selected Category task*/
@@ -36,15 +35,8 @@ const CategoriesTable = () => {
             { title: "Description", field: "description" },
             { title: "Date Created", field: "created_at" },
           ]}
-          data={[
-            {
-              title: "Basic 500",
-              description:
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla, voluptate impedit hic at eaque facere. Laboriosam atque quae nulla cumque consequatur saepe laudantium corporis eveniet molestias eius, dolores voluptatem rem!",
-              created_at: "August 02, 2022",
-            },
-          ]}
-          isLoading={false}
+          data={categories}
+          isLoading={loading}
           actions={[
             {
               icon: () => <Edit />,
