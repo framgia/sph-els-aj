@@ -1,30 +1,24 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "../utils/GeneralFunctions";
 
 import axios from "../lib/axios";
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
   const [loading, setLoading] = useState();
-  const [errorMessage, setErrorMessage] = useState(false);
-  const [errorStatus, setErrorStatus] = useState(-1);
   const navigate = useNavigate();
 
-  const catchErrors = ({ error, setError, clearErrors }) => {
+  const catchErrors = ({ error, setError }) => {
     setLoading(false);
-    setErrorMessage(error.message);
-    setErrorStatus(error.response.status);
-    clearErrors();
-    if (error.response.status !== 422) throw error;
+    if (error.response.status !== 422) {
+      Toast(error.message, "error");
+      throw error;
+    }
     let entries = Object.entries(error.response.data.errors);
     entries.forEach(function (item) {
       setError(item[0], { type: "custom", message: item[1][0] });
     });
-  };
-
-  const resetErrors = () => {
-    setErrorMessage("");
-    setErrorStatus(-1);
   };
 
   const {
@@ -49,25 +43,23 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
   const csrf = () => axios.get("sanctum/csrf-cookie");
 
-  const registerUser = async ({ clearErrors, setError, data }) => {
+  const registerUser = async ({ setError, data }) => {
     try {
-      resetErrors();
       await csrf();
       const response = await axios.post("/register", data);
       if (response.status === 204) mutate();
     } catch (error) {
-      catchErrors({ error, setError, clearErrors });
+      catchErrors({ error, setError });
     }
   };
 
-  const loginUser = async ({ clearErrors, setError, data }) => {
+  const loginUser = async ({ setError, data }) => {
     try {
-      resetErrors();
       await csrf();
       const response = await axios.post("/login", data);
       if (response.status === 204) mutate();
     } catch (error) {
-      catchErrors({ error, setError, clearErrors });
+      catchErrors({ error, setError });
     }
   };
 
@@ -81,7 +73,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
   useEffect(() => {
     if (middleware === "guest" && redirectIfAuthenticated && user) {
       let route = user?.type?.id === 1 ? "/admin/users" : "/dashboard";
-      navigate(route, { replace: true, state: { user: user } });
+      navigate(route, { replace: true, state: { user: user, open: true } });
     }
     if (middleware === "auth" && error) logout();
   }, [user, error]);
@@ -93,7 +85,5 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     logout,
     loading,
     setLoading,
-    errorMessage,
-    errorStatus,
   };
 };

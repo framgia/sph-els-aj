@@ -6,20 +6,19 @@ import {
   Container,
   Grid,
   Link,
-  Box
+  Box,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { School } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useAuth } from "../../../hooks/auth";
 import { CustomBox, CustomAvatar, FormBox, SignUpBtn } from "./Styles";
 import { schema } from "./FormSchema";
-import MessageDialog from "../../../components/MessageDialog";
-import { useEffect, useState } from "react";
 
 export default function SignUp() {
-  const { registerUser, loading, setLoading, errorMessage, errorStatus } = useAuth({
+  const { registerUser, loading, setLoading } = useAuth({
     middleware: "guest",
     redirectIfAuthenticated: true,
   });
@@ -28,7 +27,6 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
     setError,
   } = useForm({
     resolver: yupResolver(schema),
@@ -36,20 +34,8 @@ export default function SignUp() {
 
   const onSubmit = (data) => {
     setLoading(true);
-    setOpenMessageDialog(false);
-    registerUser({ setError, clearErrors, data });
+    registerUser({ setError, data });
   };
-  const [openMessageDialog, setOpenMessageDialog] = useState(false);
-
-  const handleClose = (value) => {
-    setOpenMessageDialog(value);
-  };
-
-  useEffect(() => {
-    if (errorStatus !== -1 && errorStatus !== 422) {
-      setOpenMessageDialog(true);
-    }
-  }, [errorStatus]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,7 +43,12 @@ export default function SignUp() {
       <Paper elevation={3}>
         <CustomBox>
           <Box
-            sx={{ mt: 2, display: "flex", flexDirection: "row", alignItems: "center" }}
+            sx={{
+              mt: 2,
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
             <CustomAvatar sx={{ m: 1, bgcolor: "primary.main" }}>
               <School />
@@ -85,7 +76,7 @@ export default function SignUp() {
               autoFocus
               {...register("name")}
               error={!!errors?.name}
-              helperText={errors?.name ? 'The ' + errors.name.message : null}
+              helperText={errors?.name ? "The " + errors.name.message : null}
             />
             <TextField
               margin="normal"
@@ -97,7 +88,7 @@ export default function SignUp() {
               autoComplete="email"
               error={!!errors?.email}
               {...register("email")}
-              helperText={errors?.email ? 'The ' + errors.email.message : null}
+              helperText={errors?.email ? "The " + errors.email.message : null}
             />
             <TextField
               margin="normal"
@@ -110,7 +101,9 @@ export default function SignUp() {
               autoComplete="password"
               error={!!errors?.password}
               {...register("password")}
-              helperText={errors?.password ? 'The ' + errors.password.message : null}
+              helperText={
+                errors?.password ? "The " + errors.password.message : null
+              }
             />
             <TextField
               margin="normal"
@@ -147,13 +140,6 @@ export default function SignUp() {
           </FormBox>
         </CustomBox>
       </Paper>
-      <MessageDialog
-        message={errorMessage}
-        open={openMessageDialog}
-        severity="error"
-        onClose={handleClose}
-        autoHideDuration={3000}
-      />
     </Container>
   );
 }

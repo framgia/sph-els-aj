@@ -5,22 +5,26 @@ import { useForm } from "react-hook-form";
 
 import CategoryDialog from "./CategoryDialog";
 import { schema } from "./FormSchema";
+import { useCategories } from "../../../hooks/categories";
 
 export const AddCategory = ({ onOpen, onClose }) => {
   const [open, setOpen] = useState(false);
+  const { addCategory, loading, setLoading, isSuccess } = useCategories();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     clearErrors,
+    setError,
     reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    // TODO: Will add functionality in another task
+    setLoading(true);
+    addCategory(setError, data);
   };
 
   useEffect(() => {
@@ -37,12 +41,20 @@ export const AddCategory = ({ onOpen, onClose }) => {
     onClose(value);
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+      onClose(false);
+    }
+  }, [isSuccess]);
+
   return (
     <CategoryDialog
       title="Add Category"
       onOpen={open}
       onClose={handleClose}
       onSubmit={handleSubmit(onSubmit)}
+      btnLoading={loading}
     >
       <TextField
         margin="normal"
@@ -52,6 +64,7 @@ export const AddCategory = ({ onOpen, onClose }) => {
         fullWidth
         variant="outlined"
         error={!!errors?.title}
+        disabled={loading}
         {...register("title")}
         helperText={errors?.title ? errors.title.message : null}
       />
@@ -62,6 +75,7 @@ export const AddCategory = ({ onOpen, onClose }) => {
         fullWidth
         rows={4}
         error={!!errors?.description}
+        disabled={loading}
         {...register("description")}
         helperText={errors?.description ? errors.description.message : null}
       />

@@ -25,7 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:500'],
+            'description' => ['required', 'string', 'max:500'],
         ];
     }
 }

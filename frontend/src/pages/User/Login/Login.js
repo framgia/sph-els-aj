@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import {
   Typography,
   Box,
@@ -20,22 +18,18 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./FormSchema";
 
-import MessageDialog from "../../../components/MessageDialog";
 import { useAuth } from "../../../hooks/auth";
 
 export default function Login() {
-  const { loginUser, loading, setLoading, errorMessage, errorStatus } = useAuth(
-    {
-      middleware: "guest",
-      redirectIfAuthenticated: true,
-    }
-  );
+  const { loginUser, loading, setLoading } = useAuth({
+    middleware: "guest",
+    redirectIfAuthenticated: true,
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
     setError,
   } = useForm({
     resolver: yupResolver(schema),
@@ -43,20 +37,8 @@ export default function Login() {
 
   const onSubmit = (data) => {
     setLoading(true);
-    setOpenMessageDialog(false);
-    loginUser({ setError, clearErrors, data });
+    loginUser({ setError, data });
   };
-
-  const handleClose = (value) => {
-    setOpenMessageDialog(value);
-  };
-  const [openMessageDialog, setOpenMessageDialog] = useState(false);
-
-  useEffect(() => {
-    if (errorStatus !== -1 && errorStatus !== 422) {
-      setOpenMessageDialog(true);
-    }
-  }, [errorStatus]);
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -152,13 +134,6 @@ export default function Login() {
           </Box>
         </Box>
       </Grid>
-      <MessageDialog
-        message={errorMessage}
-        open={openMessageDialog}
-        severity="error"
-        onClose={handleClose}
-        autoHideDuration={3000}
-      />
     </Grid>
   );
 }
