@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
@@ -24,4 +25,5 @@ Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
 // ADD: PROTECTION TO API
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('user', UserController::class)->except(['store']);
+    Route::apiResource('category', CategoryController::class);
 });
