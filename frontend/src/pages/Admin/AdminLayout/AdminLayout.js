@@ -6,7 +6,6 @@ import {
   Container,
   CssBaseline,
   Grid,
-  Paper,
   Toolbar,
 } from "@mui/material";
 
