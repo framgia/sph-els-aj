@@ -6,8 +6,8 @@ import { tableIcons } from "../../../../utils/TableIcons";
 import AddCategoryButton from "./AddCategoryButton";
 import { useCategories } from "../../../../hooks/categories";
 
-const CategoriesTable = () => {
-  const { categories, loading } = useCategories();
+const CategoriesTable = ({ onAdd }) => {
+  const { categories } = useCategories();
 
   const onDelete = (data) => {
     /* TODO: Will Provide functionality in 
@@ -19,9 +19,8 @@ const CategoriesTable = () => {
     [BE/FE] Edit selected Category task*/
   };
 
-  const onAdd = () => {
-    /* TODO: Will Provide functionality in 
-    [BE/FE] Insert New Category task*/
+  const handleAdd = () => {
+    onAdd(true);
   };
 
   return (
@@ -36,7 +35,7 @@ const CategoriesTable = () => {
             { title: "Date Created", field: "created_at" },
           ]}
           data={categories}
-          isLoading={loading}
+          isLoading={!categories}
           actions={[
             {
               icon: () => <Edit />,
@@ -52,7 +51,7 @@ const CategoriesTable = () => {
           options={{ actionsColumnIndex: -1 }}
         />
       </Box>
-      <AddCategoryButton onAdd={onAdd} />
+      <AddCategoryButton onAdd={handleAdd} />
     </>
   );
 };
