@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -13,6 +14,7 @@ export default function FormDialog({
   onClose,
   onSubmit,
   title,
+  btnLoading,
   children,
 }) {
   const [open, setOpen] = useState(false);
@@ -37,8 +39,12 @@ export default function FormDialog({
       >
         <DialogContent sx={{ py: 0 }}>{children}</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Submit</Button>
+          <Button onClick={handleClose} disabled={btnLoading}>
+            Cancel
+          </Button>
+          <LoadingButton type="submit" loading={btnLoading}>
+            Submit
+          </LoadingButton>
         </DialogActions>
       </Box>
     </Dialog>

@@ -12,10 +12,10 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return CategoryResource::collection(Category::all());
+        return CategoryResource::collection(Category::orderBy('created_at', 'desc')->get());
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         Category::create($request->validated());
         return response()->json([
