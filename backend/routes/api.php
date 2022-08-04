@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\QuestionController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
@@ -26,4 +27,5 @@ Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('user', UserController::class)->except(['store']);
     Route::apiResource('category', CategoryController::class);
+    Route::apiResource('category.question', QuestionController::class);
 });
