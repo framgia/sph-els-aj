@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { Toast } from "../utils/GeneralFunctions";
 
+import { Toast } from "../utils/GeneralFunctions";
 import axios from "../lib/axios";
 
 export const useCategories = () => {
@@ -57,6 +57,37 @@ export const useCategories = () => {
     }
   };
 
+  const editCategory = async (setError, data) => {
+    try {
+      const response = await axios.put(`/api/category/${data.id}`, data);
+      if (response.status === 200) {
+        setIsSuccess(true);
+        Toast("Category updated successfully!", "success");
+        mutate();
+      }
+    } catch (error) {
+      catchErrors({ error, setError });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteCategory = async (id, setError) => {
+    try {
+      setIsSuccess(false);
+      const response = await axios.delete(`/api/category/${id}`);
+      if (response.status === 200) {
+        setIsSuccess(true);
+        Toast("Category deleted successfully!", "success");
+        mutate();
+      }
+    } catch (error) {
+      catchErrors({ error, setError });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     categories,
     error,
@@ -64,6 +95,8 @@ export const useCategories = () => {
     loading,
     setLoading,
     addCategory,
+    editCategory,
+    deleteCategory,
     isSuccess,
     isValidating,
   };

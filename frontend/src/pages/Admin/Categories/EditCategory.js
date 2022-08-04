@@ -7,9 +7,9 @@ import CategoryDialog from "./CategoryDialog";
 import { schema } from "./FormSchema";
 import { useCategories } from "../../../hooks/categories";
 
-const AddCategory = ({ onOpen, onClose }) => {
+const EditCategory = ({ data, onOpen, onClose }) => {
   const [open, setOpen] = useState(false);
-  const { addCategory, loading, setLoading, isSuccess } = useCategories();
+  const { editCategory, loading, setLoading, isSuccess } = useCategories();
 
   const {
     register,
@@ -24,33 +24,34 @@ const AddCategory = ({ onOpen, onClose }) => {
 
   const onSubmit = (data) => {
     setLoading(true);
-    addCategory(setError, data);
+    editCategory(setError, data);
   };
 
   useEffect(() => {
     setOpen(onOpen);
     clearErrors();
     reset({
-      title: "",
-      description: "",
+      id: data.id,
+      title: data.title,
+      description: data.description,
     });
   }, [onOpen]);
 
   const handleClose = (value) => {
     setOpen(value);
-    onClose("add", value);
+    onClose("edit", value);
   };
 
   useEffect(() => {
     if (isSuccess) {
       setOpen(false);
-      onClose("add", false);
+      onClose("edit", false);
     }
   }, [isSuccess]);
 
   return (
     <CategoryDialog
-      title="Add Category"
+      title="Edit Category"
       onOpen={open}
       onClose={handleClose}
       onSubmit={handleSubmit(onSubmit)}
@@ -83,4 +84,4 @@ const AddCategory = ({ onOpen, onClose }) => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;
