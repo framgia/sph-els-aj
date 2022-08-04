@@ -1,27 +1,25 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import MaterialTable from "material-table";
+import moment from "moment";
 
 import { tableIcons } from "../../../../utils/TableIcons";
 import AddCategoryButton from "./AddCategoryButton";
 import { useCategories } from "../../../../hooks/categories";
-import moment from "moment";
 
-const CategoriesTable = ({ onAdd }) => {
+const CategoriesTable = ({ onOpen }) => {
   const { categories, isValidating } = useCategories();
 
-  const onDelete = (data) => {
-    /* TODO: Will Provide functionality in 
-    [BE/FE] Delete selected Category task*/
+  const handleDelete = (data) => {
+    onOpen("delete", true, data);
   };
 
-  const onEdit = (data) => {
-    /* TODO: Will Provide functionality in 
-    [BE/FE] Edit selected Category task*/
+  const handleEdit = (data) => {
+    onOpen("edit", true, data);
   };
 
   const handleAdd = () => {
-    onAdd(true);
+    onOpen("add", true, null);
   };
 
   return (
@@ -49,12 +47,12 @@ const CategoriesTable = ({ onAdd }) => {
             {
               icon: () => <Edit />,
               tooltip: "Edit Category",
-              onClick: (event, rowData) => onEdit(rowData),
+              onClick: (event, rowData) => handleEdit(rowData),
             },
             (rowData) => ({
               icon: () => <Delete />,
               tooltip: "Delete Category",
-              onClick: (event, rowData) => onDelete(rowData),
+              onClick: (event, rowData) => handleDelete(rowData),
             }),
           ]}
           options={{ actionsColumnIndex: -1 }}
