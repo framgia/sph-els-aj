@@ -32,6 +32,32 @@ const QuestionsTable = ({ onOpen }) => {
     setCategoryId(data);
   };
 
+  const actions = [
+    {
+      icon: () => <Edit />,
+      tooltip: "Edit Question",
+      onClick: (event, rowData) => handleEdit(rowData),
+    },
+    (rowData) => ({
+      icon: () => <Delete />,
+      tooltip: "Delete Question",
+      onClick: (event, rowData) => handleDelete(rowData),
+    }),
+  ];
+
+  const columns = [
+    { title: "Question", field: "value" },
+    {
+      title: "Date Created",
+      field: "created_at",
+      render: (rowData) => (
+        <Typography>
+          {moment(rowData.created_at).format("MMMM Do YYYY")}
+        </Typography>
+      ),
+    },
+  ];
+
   return (
     <>
       <Paper sx={{ px: 5, pb: 5 }}>
@@ -39,32 +65,10 @@ const QuestionsTable = ({ onOpen }) => {
         <MaterialTable
           icons={tableIcons}
           title="Questions Table"
-          columns={[
-            { title: "Question", field: "value" },
-            {
-              title: "Date Created",
-              field: "created_at",
-              render: (rowData) => (
-                <Typography>
-                  {moment(rowData.created_at).format("MMMM Do YYYY")}
-                </Typography>
-              ),
-            },
-          ]}
+          columns={columns}
           data={questions}
           isLoading={isValidating}
-          actions={[
-            {
-              icon: () => <Edit />,
-              tooltip: "Edit Question",
-              onClick: (event, rowData) => handleEdit(rowData),
-            },
-            (rowData) => ({
-              icon: () => <Delete />,
-              tooltip: "Delete Question",
-              onClick: (event, rowData) => handleDelete(rowData),
-            }),
-          ]}
+          actions={actions}
           options={{ actionsColumnIndex: -1 }}
         />
       </Paper>
