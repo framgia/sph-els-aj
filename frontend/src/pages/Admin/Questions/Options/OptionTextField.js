@@ -13,7 +13,7 @@ const TextField = styled(MuiTextField)({
   width: "95%",
 });
 
-const OptionTextField = ({ index, errors, register, loading, value }) => {
+const OptionTextField = ({ index, errors, register, disabled, value }) => {
   return (
     <Grid item xs={9}>
       <TextField
@@ -23,7 +23,7 @@ const OptionTextField = ({ index, errors, register, loading, value }) => {
         type="text"
         variant="outlined"
         error={!!errors.options?.[`${index}`]?.value}
-        disabled={loading}
+        disabled={disabled}
         {...register(`options[${index}].value`)}
         helperText={
           errors?.options?.[`${index}`]?.value

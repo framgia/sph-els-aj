@@ -11,7 +11,7 @@ import FormInput from "../../../../components/FormInput";
 
 const AddQuestion = ({ onOpen, onClose, categoryId }) => {
   const [openDialog, setOpenDialog] = useState(false);
-  const { loading, isSuccess } = useQuestions({
+  const { addQuestion, loading, setLoading, isSuccess } = useQuestions({
     categoryId,
   });
 
@@ -20,6 +20,7 @@ const AddQuestion = ({ onOpen, onClose, categoryId }) => {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
     getValues,
     control,
   } = useForm({
@@ -50,7 +51,8 @@ const AddQuestion = ({ onOpen, onClose, categoryId }) => {
   }, [isSuccess]);
 
   const onSubmit = (data) => {
-    // TODO: Functionality will be in another task
+    setLoading(true);
+    addQuestion(setError, data);
   };
 
   return (
@@ -66,7 +68,7 @@ const AddQuestion = ({ onOpen, onClose, categoryId }) => {
         type="text"
         label="Question"
         variant="outlined"
-        loading={loading}
+        disabled={loading}
         autoFocus
         required
         fullWidth
@@ -78,7 +80,7 @@ const AddQuestion = ({ onOpen, onClose, categoryId }) => {
         getValues={getValues}
         errors={errors}
         register={register}
-        loading={loading}
+        disabled={loading}
       />
     </QuestionDialog>
   );

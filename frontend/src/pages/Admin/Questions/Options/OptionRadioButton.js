@@ -7,12 +7,13 @@ const Grid = styled(MuiGrid)({
   justifyContent: "center",
 });
 
-const OptionRadioButton = ({ index, is_correct, handleChange }) => {
+const OptionRadioButton = ({ index, is_correct, disabled, handleChange }) => {
   return (
     <Grid item xs={1}>
       <Radio
         color="success"
         checked={is_correct}
+        disabled={disabled}
         onChange={(e) => handleChange(e, index)}
       />
     </Grid>
