@@ -6,20 +6,21 @@ import moment from "moment";
 import { tableIcons } from "../../../../utils/TableIcons";
 import AddCategoryButton from "./AddCategoryButton";
 import { useCategories } from "../../../../hooks/categories";
+import { CategoryActions } from "../../../../utils/ActionConstants";
 
 const CategoriesTable = ({ onOpen }) => {
   const { categories, isValidating } = useCategories();
 
   const handleDelete = (data) => {
-    onOpen("delete", true, data);
+    onOpen(CategoryActions.DELETE_CATEGORY, true, data);
   };
 
   const handleEdit = (data) => {
-    onOpen("edit", true, data);
+    onOpen(CategoryActions.EDIT_CATEGORY, true, data);
   };
 
   const handleAdd = () => {
-    onOpen("add", true, null);
+    onOpen(CategoryActions.ADD_CATEGORY, true, null);
   };
 
   return (

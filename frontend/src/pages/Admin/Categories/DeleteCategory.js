@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import CategoryDialog from "./CategoryDialog";
 import { useCategories } from "../../../hooks/categories";
+import { CategoryActions } from "../../../utils/ActionConstants";
 
 const DeleteCategory = ({ id, onOpen, onClose }) => {
   const [open, setOpen] = useState(false);
@@ -20,13 +21,13 @@ const DeleteCategory = ({ id, onOpen, onClose }) => {
 
   const handleClose = (value) => {
     setOpen(value);
-    onClose("delete", value);
+    onClose(CategoryActions.DELETE_CATEGORY, value);
   };
 
   useEffect(() => {
     if (isSuccess) {
       setOpen(false);
-      onClose("delete", false);
+      onClose(CategoryActions.DELETE_CATEGORY, false);
     }
   }, [isSuccess]);
 

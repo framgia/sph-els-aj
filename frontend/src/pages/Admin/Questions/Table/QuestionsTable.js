@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import { Paper, Typography } from "@mui/material";
 import MaterialTable from "material-table";
@@ -5,31 +6,38 @@ import moment from "moment";
 
 import { tableIcons } from "../../../../utils/TableIcons";
 import { useQuestions } from "../../../../hooks/questions";
-import { useState } from "react";
+import { QuestionActions } from "../../../../utils/ActionConstants";
 import CategoryDropdown from "./CategoryDropdown";
 import AddQuestionButton from "./AddQuestionButton";
 
 const QuestionsTable = ({ onOpen }) => {
-  const [categoryId, setCategoryId] = useState();
+  const [categoryId, setCategoryId] = useState(null);
   const { questions, isValidating } = useQuestions({ categoryId });
+  const [length, setLength] = useState(0);
 
   const handleDelete = (data) => {
     // TODO: Will be adding functionality on another task
-    // onOpen("delete", true, data);
+    // onOpen(QuestionActions.DELETE_QUESTION, true, data, categoryId);
   };
 
   const handleEdit = (data) => {
     // TODO: Will be adding functionality on another task
-    // onOpen("edit", true, data);
+    // onOpen(QuestionActions.EDIT_QUESTION, true, data, categoryId);
   };
 
   const handleAdd = () => {
-    // TODO: Will be adding functionality on another task
-    // onOpen("add", true, null);
+    onOpen(QuestionActions.ADD_QUESTION, true, null, categoryId);
   };
 
-  const selectedCategoryId = (data) => {
-    setCategoryId(data);
+  /* NOTE: Purpose of this function is to check 
+  the length of the categories. If it's zero then the
+  Add Button would be disabled */
+  const handleLength = (dataLength) => {
+    setLength(dataLength);
+  };
+
+  const selectedCategoryId = (id) => {
+    setCategoryId(id);
   };
 
   const actions = [
@@ -61,7 +69,10 @@ const QuestionsTable = ({ onOpen }) => {
   return (
     <>
       <Paper sx={{ px: 5, pb: 5 }}>
-        <CategoryDropdown getCategory={selectedCategoryId} />
+        <CategoryDropdown
+          getCategory={selectedCategoryId}
+          dataLength={handleLength}
+        />
         <MaterialTable
           icons={tableIcons}
           title="Questions Table"
@@ -72,7 +83,7 @@ const QuestionsTable = ({ onOpen }) => {
           options={{ actionsColumnIndex: -1 }}
         />
       </Paper>
-      <AddQuestionButton onAdd={handleAdd} onDisable={!questions} />
+      <AddQuestionButton onAdd={handleAdd} onDisable={length === 0} />
     </>
   );
 };

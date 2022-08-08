@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  Box,
-  Container,
-  CssBaseline,
-  Grid,
-  Toolbar,
-} from "@mui/material";
+import { Box, Container, CssBaseline, Grid, Toolbar } from "@mui/material";
 
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
