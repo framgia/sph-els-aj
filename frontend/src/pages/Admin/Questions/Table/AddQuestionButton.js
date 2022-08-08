@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Fab, Tooltip } from "@mui/material";
+import { Box, Fab, Tooltip } from "@mui/material";
 
 const AddQuestionButton = ({ onAdd, onDisable }) => {
   return (
@@ -12,9 +12,16 @@ const AddQuestionButton = ({ onAdd, onDisable }) => {
         left: { xs: "calc(50% - 25px)", lg: "93%" },
       }}
     >
-      <Fab color="primary" aria-label="add" onClick={onAdd} disabled={onDisable}>
-        <Add />
-      </Fab>
+      <Box component="span">
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={onAdd}
+          disabled={onDisable}
+        >
+          <Add />
+        </Fab>
+      </Box>
     </Tooltip>
   );
 };

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import CategoryDialog from "./CategoryDialog";
 import { schema } from "./FormSchema";
 import { useCategories } from "../../../hooks/categories";
+import { CategoryActions } from "../../../utils/ActionConstants";
 
 const AddCategory = ({ onOpen, onClose }) => {
   const [open, setOpen] = useState(false);
@@ -38,13 +39,13 @@ const AddCategory = ({ onOpen, onClose }) => {
 
   const handleClose = (value) => {
     setOpen(value);
-    onClose("add", value);
+    onClose(CategoryActions.ADD_CATEGORY, value);
   };
 
   useEffect(() => {
     if (isSuccess) {
       setOpen(false);
-      onClose("add", false);
+      onClose(CategoryActions.ADD_CATEGORY, false);
     }
   }, [isSuccess]);
 

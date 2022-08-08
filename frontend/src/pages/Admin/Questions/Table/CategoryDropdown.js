@@ -10,23 +10,34 @@ import { useEffect, useState } from "react";
 
 import { useCategories } from "../../../../hooks/categories";
 
-const CategoryDropdown = ({ getCategory }) => {
-  const [data, setData] = useState("");
+const INITIAL_INDEX = 0;
+
+const CategoryDropdown = ({ getCategory, dataLength }) => {
   const [length, setLength] = useState(0);
   const [label, setLabel] = useState("");
+  const [selectDefaultValue, setSelectDefaultValue] = useState("");
   const { categories, isValidating } = useCategories();
 
   const handleChange = (event) => {
-    setData(event.target.value);
+    setSelectDefaultValue(event.target.value);
     getCategory(event.target.value);
   };
 
   useEffect(() => {
-    if (categories) {
-      setLength(categories.length);
-      setLabel("Category");
+    if (isValidating) {
+      setLabel("Loading...");
+    } else {
+      if (categories.length === 0) {
+        setLabel("No data");
+      } else {
+        setLabel("Categories");
+        setSelectDefaultValue(categories[INITIAL_INDEX].id);
+        getCategory(categories[INITIAL_INDEX].id);
+        setLength(categories.length);
+        dataLength(categories.length);
+      }
     }
-  }, [categories]);
+  }, [isValidating]);
 
   return (
     <Grid
@@ -40,8 +51,7 @@ const CategoryDropdown = ({ getCategory }) => {
       <FormControl sx={{ width: "25%", my: 2 }} disabled={length === 0}>
         <InputLabel id="category-select">{label}</InputLabel>
         <Select
-          labelId="category-select"
-          value={data}
+          value={selectDefaultValue}
           label="Categories"
           onChange={handleChange}
         >

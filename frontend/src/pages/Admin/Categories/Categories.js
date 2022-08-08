@@ -3,6 +3,7 @@ import { useState } from "react";
 import AdminLayout from "../AdminLayout/AdminLayout";
 import CategoriesTable from "./Table/CategoriesTable";
 import { TabTitle } from "../../../utils/GeneralFunctions";
+import { CategoryActions } from "../../../utils/ActionConstants";
 import AddCategory from "./AddCategory";
 import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
@@ -20,13 +21,13 @@ const Categories = () => {
     description: "",
   });
 
-  const handleOpen = (action, isOpen, data) => {
+  const handleDialog = (action, isOpen, data) => {
     switch (action) {
-      case "edit":
+      case CategoryActions.EDIT_CATEGORY:
         setOnEdit(isOpen);
         if (isOpen) setData(data);
         break;
-      case "delete":
+      case CategoryActions.DELETE_CATEGORY:
         setOnDelete(isOpen);
         if (isOpen) setData(data);
         break;
@@ -37,10 +38,10 @@ const Categories = () => {
 
   return (
     <AdminLayout navTitle="Manage Categories">
-      <CategoriesTable onOpen={handleOpen} />
-      <AddCategory onOpen={onAdd} onClose={handleOpen} />
-      <EditCategory data={data} onOpen={onEdit} onClose={handleOpen} />
-      <DeleteCategory id={data.id} onOpen={onDelete} onClose={handleOpen} />
+      <CategoriesTable onOpen={handleDialog} />
+      <AddCategory onOpen={onAdd} onClose={handleDialog} />
+      <EditCategory data={data} onOpen={onEdit} onClose={handleDialog} />
+      <DeleteCategory id={data.id} onOpen={onDelete} onClose={handleDialog} />
     </AdminLayout>
   );
 };
