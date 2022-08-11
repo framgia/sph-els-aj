@@ -40,7 +40,7 @@ class QuestionController extends Controller
   {
     $category->questions()->find($question->id)
       ->update(['value' => $request->value]);
-    OptionService::updateOptions($request->options);
+    OptionService::updateOptions($question->id, $request->options);
     return response()->noContent();
   }
 

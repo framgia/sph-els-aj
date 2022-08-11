@@ -5,15 +5,16 @@ import AddQuestion from "./Actions/AddQuestion";
 import QuestionsTable from "./Table/QuestionsTable";
 import { TabTitle } from "../../../utils/GeneralFunctions";
 import { QuestionActions } from "../../../utils/ActionConstants";
+import EditQuestion from "./Actions/EditQuestion";
+import DeleteQuestion from "./Actions/DeleteQuestion";
 
 const Questions = () => {
   TabTitle("Admin | Manage Questions");
 
-  // TODO: Will be using this unused states in another task
   const [onAdd, setOnAdd] = useState(false);
   const [onEdit, setOnEdit] = useState(false);
   const [onDelete, setOnDelete] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
   const [id, setId] = useState(0);
 
   const handleDialog = (action, isOpen, data, categoryId) => {
@@ -36,6 +37,18 @@ const Questions = () => {
     <AdminLayout navTitle="Manage Questions">
       <QuestionsTable onOpen={handleDialog} />
       <AddQuestion onOpen={onAdd} onClose={handleDialog} categoryId={id} />
+      <EditQuestion
+        onOpen={onEdit}
+        data={data}
+        onClose={handleDialog}
+        categoryId={id}
+      />
+      <DeleteQuestion
+        onOpen={onDelete}
+        data={data}
+        onClose={handleDialog}
+        categoryId={id}
+      />
     </AdminLayout>
   );
 };

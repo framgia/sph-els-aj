@@ -16,13 +16,11 @@ const QuestionsTable = ({ onOpen }) => {
   const [length, setLength] = useState(0);
 
   const handleDelete = (data) => {
-    // TODO: Will be adding functionality on another task
-    // onOpen(QuestionActions.DELETE_QUESTION, true, data, categoryId);
+    onOpen(QuestionActions.DELETE_QUESTION, true, data, categoryId);
   };
 
   const handleEdit = (data) => {
-    // TODO: Will be adding functionality on another task
-    // onOpen(QuestionActions.EDIT_QUESTION, true, data, categoryId);
+    onOpen(QuestionActions.EDIT_QUESTION, true, data, categoryId);
   };
 
   const handleAdd = () => {

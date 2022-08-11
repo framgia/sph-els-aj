@@ -60,6 +60,43 @@ export const useQuestions = ({ categoryId }) => {
     }
   };
 
+  const editQuestion = async (setError, data) => {
+    try {
+      setIsSuccess(false);
+      const response = await axios.put(
+        `/api/category/${categoryId}/question/${data.id}`,
+        data
+      );
+      if (response.status === 204) {
+        setIsSuccess(true);
+        Toast("Question updated successfully!", "success");
+        mutate();
+      }
+    } catch (error) {
+      catchErrors({ error, setError });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteQuestion = async (setError, id) => {
+    try {
+      setIsSuccess(false);
+      const response = await axios.delete(
+        `/api/category/${categoryId}/question/${id}`
+      );
+      if (response.status === 204) {
+        setIsSuccess(true);
+        Toast("Question deleted successfully!", "success");
+        mutate();
+      }
+    } catch (error) {
+      catchErrors({ error, setError });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     questions,
     error,
@@ -69,5 +106,7 @@ export const useQuestions = ({ categoryId }) => {
     isSuccess,
     isValidating,
     addQuestion,
+    editQuestion,
+    deleteQuestion,
   };
 };

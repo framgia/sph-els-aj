@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray } from "react-hook-form";
 
 import OptionRadioButton from "../Options/OptionRadioButton";
@@ -17,9 +17,15 @@ const Options = ({ getValues, errors, register, disabled, control }) => {
     name: "options",
   });
 
+  useEffect(() => {
+    setSelectedAnswer(
+      getValues("options").findIndex((option) => option.is_correct)
+    );
+  }, []);
+
   const onAddOption = () => {
     if (fields.length !== MAX_LIMIT) {
-      append({ value: "", is_correct: false });
+      append({ id: "", value: "", is_correct: false });
     }
   };
 
@@ -36,6 +42,7 @@ const Options = ({ getValues, errors, register, disabled, control }) => {
     setSelectedAnswer(selectedIndex);
     getValues("options").forEach((option, index) => {
       update(index, {
+        id: getValues(`options.${index}.id`),
         value: getValues(`options.${index}.value`),
         is_correct: selectedIndex === index,
       });
@@ -48,7 +55,7 @@ const Options = ({ getValues, errors, register, disabled, control }) => {
         <Grid container key={id}>
           <OptionRadioButton
             value={value}
-            is_correct={is_correct}
+            is_correct={Boolean(is_correct)}
             handleChange={(e) => onSetAnswer(e, index)}
             disabled={disabled}
           />
@@ -59,7 +66,11 @@ const Options = ({ getValues, errors, register, disabled, control }) => {
             disabled={disabled}
             value={value}
           />
-          <OptionAction action="add" disabled={disabled} handleOnClick={onAddOption} />
+          <OptionAction
+            action="add"
+            disabled={disabled}
+            handleOnClick={onAddOption}
+          />
           <OptionAction
             action="remove"
             disabled={disabled}
