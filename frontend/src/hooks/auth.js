@@ -72,7 +72,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
   useEffect(() => {
     if (middleware === "guest" && redirectIfAuthenticated && user) {
-      let route = user?.type?.id === 1 ? "/admin/users" : "/dashboard";
+      let route = user?.type?.id === 1 ? "/admin/users" : "/users";
       navigate(route, { replace: true, state: { user: user, open: true } });
     }
     if (middleware === "auth" && error) logout();

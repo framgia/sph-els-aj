@@ -9,7 +9,9 @@ import UserDashboard from "./pages/User/UserDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import Users from "./pages/Admin/Users/Users";
 import Categories from "./pages/Admin/Categories/Categories";
+import UserCategories from "./pages/User/Categories";
 import Questions from "./pages/Admin/Questions/Questions";
+import UserList from "./pages/User/UserList";
 import { Roles } from "./utils/RoleConstants";
 
 const App = () => {
@@ -24,6 +26,8 @@ const App = () => {
 
         <Route element={<RequireAuth role={Roles.USER} />}>
           <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/users" element={<UserList />} />
+          <Route path="/categories" element={<UserCategories />} />
         </Route>
 
         <Route element={<RequireAuth role={Roles.ADMIN} />}>
