@@ -10,7 +10,7 @@ const MAX_LIMIT = 5;
 const MINIMUM_LIMIT = 1;
 const INITIAL_INDEX = 0;
 
-const Options = ({ getValues, errors, register, loading, control }) => {
+const Options = ({ getValues, errors, register, disabled, control }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(0);
   const { fields, remove, append, update } = useFieldArray({
     control,
@@ -50,17 +50,19 @@ const Options = ({ getValues, errors, register, loading, control }) => {
             value={value}
             is_correct={is_correct}
             handleChange={(e) => onSetAnswer(e, index)}
+            disabled={disabled}
           />
           <OptionTextField
             index={index}
             errors={errors}
             register={register}
-            loading={loading}
+            disabled={disabled}
             value={value}
           />
-          <OptionAction action="add" handleOnClick={onAddOption} />
+          <OptionAction action="add" disabled={disabled} handleOnClick={onAddOption} />
           <OptionAction
             action="remove"
+            disabled={disabled}
             handleOnClick={() => onRemoveOption(index, value)}
           />
         </Grid>

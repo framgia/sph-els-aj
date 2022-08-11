@@ -41,7 +41,6 @@ export const useQuestions = ({ categoryId }) => {
     });
   };
 
-  // TODO: Will be using this function in another task
   const addQuestion = async (setError, data) => {
     try {
       setIsSuccess(false);
@@ -49,7 +48,7 @@ export const useQuestions = ({ categoryId }) => {
         `/api/category/${categoryId}/question`,
         data
       );
-      if (response.status === 200) {
+      if (response.status === 204) {
         setIsSuccess(true);
         Toast("Question added successfully!", "success");
         mutate();

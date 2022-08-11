@@ -39,10 +39,14 @@ const actionButton = (action) => {
   }
 };
 
-const OptionAction = ({ action, handleOnClick }) => {
+const OptionAction = ({ action, disabled, handleOnClick }) => {
   return (
     <Grid item xs={1}>
-      <IconButton aria-label={setAriaLabel(action)} onClick={handleOnClick}>
+      <IconButton
+        disabled={disabled}
+        aria-label={setAriaLabel(action)}
+        onClick={handleOnClick}
+      >
         {actionButton(action)}
       </IconButton>
     </Grid>

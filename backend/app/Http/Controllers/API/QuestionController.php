@@ -14,7 +14,8 @@ class QuestionController extends Controller
 {
   public function index(Category $category)
   {
-    return QuestionResource::collection(Question::where('category_id', $category->id)
+    return QuestionResource::collection(Question::orderBy('created_at', 'desc')
+      ->where('category_id', $category->id)
       ->with('options')->get());
   }
 

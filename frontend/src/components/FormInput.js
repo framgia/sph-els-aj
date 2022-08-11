@@ -1,11 +1,11 @@
 import { TextField } from "@mui/material";
 
-const FormInput = ({ label, errors, register, loading, ...inputProps }) => {
+const FormInput = ({ label, errors, register, disabled, ...inputProps }) => {
   return (
     <TextField
       label={label}
       error={!!errors}
-      disabled={loading}
+      disabled={disabled}
       helperText={errors ? errors.message : null}
       {...register}
       {...inputProps}

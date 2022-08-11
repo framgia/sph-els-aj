@@ -29,4 +29,11 @@ class StoreQuestionRequest extends FormRequest
 			'options.*.is_correct' => ['boolean']
 		];
 	}
+
+	public function attributes()
+	{
+		return [
+			'options.*.value' => 'option'
+		];
+	}
 }
