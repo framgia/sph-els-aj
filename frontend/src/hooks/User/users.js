@@ -1,18 +1,13 @@
 import useSWR from "swr";
 
-import axios from "../lib/axios";
+import axios from "../../lib/axios";
 
 export const useUserList = () => {
-  const {
-    data: users,
-    error,
-    mutate,
-    loading,
-  } = useSWR(
-    "/api/admin/user",
+  const { data: users, error } = useSWR(
+    "/api/user/user",
     () =>
       axios
-        .get("/api/admin/user")
+        .get("/api/user/user")
         .then((res) => res.data)
         .catch((error) => {
           if (error.response.status !== 409) throw error;
@@ -27,7 +22,5 @@ export const useUserList = () => {
   return {
     users,
     error,
-    mutate,
-    loading,
   };
 };

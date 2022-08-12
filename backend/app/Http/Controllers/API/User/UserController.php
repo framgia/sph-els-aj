@@ -3,37 +3,27 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return UserResource::collection(User::with(['type', 'avatar'])->get());
+        return UserResource::collection(User::with(['type', 'avatar'])
+            ->whereNot('type_id', 1)->whereNot('id', auth()->user()->id)->get());
     }
 
-
-    public function show(User $user)
+    public function store(Request $request)
     {
-        return new UserResource(User::with(['type', 'avatar'])->find($user->id));
-    }
-
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        $user->update($request->validated());
-        return response()->json([
-            'user' => $user,
-            'message' => 'User has been updated'
-        ]);
+        /* TODO: This function is for following a user, will
+        implement functionality in another task */
     }
 
     public function destroy(User $user)
     {
-        $user->delete();
-        return response()->json([
-            'message' => 'User has been deleted'
-        ]);
+        /* TODO: This function is for unfollowing a user, will
+        implement functionality in another task */
     }
 }
