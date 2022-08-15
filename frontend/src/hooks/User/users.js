@@ -4,10 +4,10 @@ import axios from "../../lib/axios";
 
 export const useUserList = () => {
   const { data: users, error } = useSWR(
-    "/api/user/user",
+    "/api/user",
     () =>
       axios
-        .get("/api/user/user")
+        .get("/api/user")
         .then((res) => res.data)
         .catch((error) => {
           if (error.response.status !== 409) throw error;

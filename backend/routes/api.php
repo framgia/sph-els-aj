@@ -32,6 +32,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::apiResource('category.question', QuestionController::class);
     });
     Route::group(['prefix' => 'user'], function () {
-        Route::apiResource('user', UserController::class)->only(['index', 'store', 'destroy']);
+        Route::apiResource('/', UserController::class)->only(['index', 'store', 'destroy']);
     });
 });
