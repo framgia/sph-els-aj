@@ -10,6 +10,7 @@ use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\User\ActivityLogsController;
 use App\Http\Controllers\Api\User\FollowController;
+use App\Http\Controllers\Api\User\UserCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,19 +24,20 @@ use App\Http\Controllers\Api\User\FollowController;
 */
 
 Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
-    return new UserResource(User::with(['type', 'avatar'])->find($request->user()->id));
+  return new UserResource(User::with(['type', 'avatar'])->find($request->user()->id));
 });
 
 // ADD: PROTECTION TO API
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::group(['prefix' => 'admin'], function () {
-        Route::apiResource('user', AdminUserController::class)->only(['index']);
-        Route::apiResource('category', CategoryController::class);
-        Route::apiResource('category.question', QuestionController::class);
-    });
-    Route::group(['prefix' => 'user'], function () {
-        Route::apiResource('/', UserController::class)->except(['store', 'destroy']);
-        Route::apiResource('follow', FollowController::class)->only(['index', 'store', 'destroy']);
-        Route::get('activity-logs', [ActivityLogsController::class, 'index']);
-    });
+  Route::group(['prefix' => 'admin'], function () {
+    Route::apiResource('user', AdminUserController::class)->only(['index']);
+    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('category.question', QuestionController::class);
+  });
+  Route::group(['prefix' => 'user'], function () {
+    Route::apiResource('/', UserController::class)->except(['store', 'destroy']);
+    Route::apiResource('follow', FollowController::class)->only(['index', 'store', 'destroy']);
+    Route::apiResource('category', UserCategoryController::class)->only(['index']);
+    Route::get('activity-logs', [ActivityLogsController::class, 'index']);
+  });
 });

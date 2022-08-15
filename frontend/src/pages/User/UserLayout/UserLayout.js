@@ -12,7 +12,15 @@ const UserLayout = ({ children }) => {
       <CssBaseline />
       <NavBar />
       <main>
-        <Box sx={{ py: 8, bgcolor: "background.paper", pt: 3, pb: 6 }}>
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            pt: 3,
+            display: "flex",
+            flexDirection: "column",
+            minHeight: "100vh",
+          }}
+        >
           {children}
         </Box>
       </main>
