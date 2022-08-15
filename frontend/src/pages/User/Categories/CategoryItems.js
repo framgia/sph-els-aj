@@ -41,7 +41,7 @@ const CategoryItems = ({ categories, takeLesson }) => {
                   <Button
                     color="primary"
                     variant="contained"
-                    onClick={() => takeLesson(is_taken)}
+                    onClick={() => takeLesson({ id, title, is_taken })}
                   >
                     START
                   </Button>
