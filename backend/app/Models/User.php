@@ -75,4 +75,9 @@ class User extends Authenticatable implements HasMedia
   {
     return $this->morphMany(ActivityLog::class, 'loggable');
   }
+
+  public function lessons()
+  {
+    return $this->belongsToMany(Category::class, 'lessons', 'user_id', 'category_id');
+  }
 }

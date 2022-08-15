@@ -18,4 +18,8 @@ class Category extends Model
   {
     return $this->hasMany(Question::class);
   }
+
+  public function lessons() {
+    return $this->belongsToMany(User::class, 'lessons', 'category_id', 'user_id');
+  }
 }
