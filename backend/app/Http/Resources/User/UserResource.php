@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'type' => new TypeResource($this->whenLoaded('type')),
             'avatar' => new AvatarResource($this->whenLoaded('avatar')),
+            'is_followed' => auth()->user()->following()->find($this->id) !== null,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];;

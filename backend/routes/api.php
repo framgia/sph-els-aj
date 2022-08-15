@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Api\User\FollowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +28,12 @@ Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
 // ADD: PROTECTION TO API
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'admin'], function () {
-        Route::apiResource('user', AdminUserController::class)->except(['store']);
+        Route::apiResource('user', AdminUserController::class)->only(['index']);
         Route::apiResource('category', CategoryController::class);
         Route::apiResource('category.question', QuestionController::class);
     });
     Route::group(['prefix' => 'user'], function () {
-        Route::apiResource('/', UserController::class)->only(['index', 'store', 'destroy']);
+        Route::apiResource('/', UserController::class)->except(['store', 'destroy']);
+        Route::apiResource('follow', FollowController::class)->only(['index', 'store', 'destroy']);
     });
 });
