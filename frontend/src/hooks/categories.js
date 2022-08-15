@@ -14,10 +14,10 @@ export const useCategories = () => {
     mutate,
     isValidating,
   } = useSWR(
-    "/api/category",
+    "/api/admin/category",
     () =>
       axios
-        .get("/api/category")
+        .get("/api/admin/category")
         .then((res) => res.data)
         .catch((error) => {
           if (error.response.status !== 409) throw error;
@@ -44,7 +44,7 @@ export const useCategories = () => {
   const addCategory = async (setError, data) => {
     try {
       setIsSuccess(false);
-      const response = await axios.post("/api/category", data);
+      const response = await axios.post("/api/admin/category", data);
       if (response.status === 200) {
         setIsSuccess(true);
         Toast("Category added successfully!", "success");
@@ -59,7 +59,7 @@ export const useCategories = () => {
 
   const editCategory = async (setError, data) => {
     try {
-      const response = await axios.put(`/api/category/${data.id}`, data);
+      const response = await axios.put(`/api/admin/category/${data.id}`, data);
       if (response.status === 200) {
         setIsSuccess(true);
         Toast("Category updated successfully!", "success");
@@ -75,7 +75,7 @@ export const useCategories = () => {
   const deleteCategory = async (id, setError) => {
     try {
       setIsSuccess(false);
-      const response = await axios.delete(`/api/category/${id}`);
+      const response = await axios.delete(`/api/admin/category/${id}`);
       if (response.status === 200) {
         setIsSuccess(true);
         Toast("Category deleted successfully!", "success");

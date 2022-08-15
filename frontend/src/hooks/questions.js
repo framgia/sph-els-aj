@@ -14,10 +14,10 @@ export const useQuestions = ({ categoryId }) => {
     mutate,
     isValidating,
   } = useSWR(
-    categoryId ? `/api/category/${categoryId}/question` : null,
+    categoryId ? `/api/admin/category/${categoryId}/question` : null,
     () =>
       axios
-        .get(`/api/category/${categoryId}/question`)
+        .get(`/api/admin/category/${categoryId}/question`)
         .then((res) => res.data)
         .catch((error) => {
           if (error.response.status !== 409) throw error;
@@ -45,7 +45,7 @@ export const useQuestions = ({ categoryId }) => {
     try {
       setIsSuccess(false);
       const response = await axios.post(
-        `/api/category/${categoryId}/question`,
+        `/api/admin/category/${categoryId}/question`,
         data
       );
       if (response.status === 204) {
@@ -64,7 +64,7 @@ export const useQuestions = ({ categoryId }) => {
     try {
       setIsSuccess(false);
       const response = await axios.put(
-        `/api/category/${categoryId}/question/${data.id}`,
+        `/api/admin/category/${categoryId}/question/${data.id}`,
         data
       );
       if (response.status === 204) {
@@ -83,7 +83,7 @@ export const useQuestions = ({ categoryId }) => {
     try {
       setIsSuccess(false);
       const response = await axios.delete(
-        `/api/category/${categoryId}/question/${id}`
+        `/api/admin/category/${categoryId}/question/${id}`
       );
       if (response.status === 204) {
         setIsSuccess(true);

@@ -11,7 +11,7 @@ import Users from "./pages/Admin/Users/Users";
 import Categories from "./pages/Admin/Categories/Categories";
 import UserCategories from "./pages/User/Categories";
 import Questions from "./pages/Admin/Questions/Questions";
-import UserList from "./pages/User/UserList";
+import UserList from "./pages/User/UserList/UserList";
 import { Roles } from "./utils/RoleConstants";
 
 const App = () => {
