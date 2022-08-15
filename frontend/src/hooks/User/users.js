@@ -1,9 +1,17 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 import axios from "../../lib/axios";
+import { Toast } from "../../utils/GeneralFunctions";
 
 export const useUserList = () => {
-  const { data: users, error } = useSWR(
+  const [loading, setLoading] = useState(false);
+
+  const {
+    data: users,
+    error,
+    mutate,
+  } = useSWR(
     "/api/user",
     () =>
       axios
@@ -15,12 +23,38 @@ export const useUserList = () => {
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
+      revalidateOnReconnect: true,
     }
   );
+
+  const followUser = async (data) => {
+    try {
+      const response = await axios.post("/api/user/follow", data);
+      if (response.status === 204) await mutate();
+    } catch (error) {
+      Toast(error.message, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const unfollowUser = async ({ idToUnfollow }) => {
+    try {
+      const response = await axios.delete(`/api/user/follow/${idToUnfollow}`);
+      if (response.status === 204) await mutate();
+    } catch (error) {
+      Toast(error.message, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     users,
     error,
+    loading,
+    setLoading,
+    followUser,
+    unfollowUser,
   };
 };

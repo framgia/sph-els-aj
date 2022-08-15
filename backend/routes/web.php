@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return public_path('avatar\default.png');
-    // return ['Laravel' => app()->version()];
+    return ['Laravel' => app()->version()];
 });
 
 

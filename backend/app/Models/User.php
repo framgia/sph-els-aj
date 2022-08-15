@@ -59,4 +59,15 @@ class User extends Authenticatable implements HasMedia
   {
     $this->addMediaCollection('avatar')->singleFile();
   }
+
+  public function followers()
+  {
+    return $this->belongsToMany(User::class, 'user_follows', 'following_id', 'follower_id');
+  }
+
+  public function following()
+  {
+    return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'following_id')
+    ->withTimestamps();;
+  }
 }

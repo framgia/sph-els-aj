@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\User\UserResource;
 use App\Models\User;
-use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\User\UserResource;
 
 class UserController extends Controller
 {
@@ -15,15 +15,14 @@ class UserController extends Controller
             ->whereNot('type_id', 1)->whereNot('id', auth()->user()->id)->get());
     }
 
-    public function store(Request $request)
+    public function show(User $user)
     {
-        /* TODO: This function is for following a user, will
-        implement functionality in another task */
+        return new UserResource(User::with(['type', 'avatar'])->find($user->id));
     }
 
-    public function destroy(User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        /* TODO: This function is for unfollowing a user, will
-        implement functionality in another task */
+        $user->update($request->validated());
+        return response()->noContent();
     }
 }
