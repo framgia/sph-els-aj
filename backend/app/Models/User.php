@@ -68,6 +68,11 @@ class User extends Authenticatable implements HasMedia
   public function following()
   {
     return $this->belongsToMany(User::class, 'user_follows', 'follower_id', 'following_id')
-    ->withTimestamps();;
+      ->withTimestamps();
+  }
+
+  public function activityLogs()
+  {
+    return $this->morphMany(ActivityLog::class, 'loggable');
   }
 }

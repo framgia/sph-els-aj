@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Api\User\ActivityLogsController;
 use App\Http\Controllers\Api\User\FollowController;
 
 /*
@@ -35,5 +36,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::apiResource('/', UserController::class)->except(['store', 'destroy']);
         Route::apiResource('follow', FollowController::class)->only(['index', 'store', 'destroy']);
+        Route::get('activity-logs', [ActivityLogsController::class, 'index']);
     });
 });

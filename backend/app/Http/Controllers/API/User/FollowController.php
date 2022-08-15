@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\User\FollowResource;
 use App\Models\User;
+use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 
 class FollowController extends Controller
@@ -19,6 +20,7 @@ class FollowController extends Controller
   public function store(Request $request)
   {
     auth()->user()->following()->attach($request->idToFollow);
+    ActivityLogService::logFollow($request->idToFollow);
     return response()->noContent();
   }
 
