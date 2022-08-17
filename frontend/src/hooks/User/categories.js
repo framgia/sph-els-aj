@@ -1,11 +1,13 @@
 import { useState } from "react";
 import useSWR from "swr";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 import axios from "../../lib/axios";
 
 export const useUserCategories = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const { data: categories, error } = useSWR(
     "/api/user/category",
@@ -23,7 +25,7 @@ export const useUserCategories = () => {
     }
   );
 
-  const takeLesson = (is_taken) => {
+  const takeLesson = ({ id, title, is_taken }) => {
     if (is_taken) {
       Swal.fire({
         title: "Oppps..",
@@ -41,7 +43,7 @@ export const useUserCategories = () => {
         confirmButtonText: "Yes, I will proceed",
       }).then((result) => {
         if (result.isConfirmed) {
-          // TODO: User will start taking the course
+          navigate("/categories/lesson", { state: { id: id, title: title } });
         }
       });
     }

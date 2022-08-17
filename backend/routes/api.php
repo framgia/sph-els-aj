@@ -10,6 +10,7 @@ use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\User\ActivityLogsController;
 use App\Http\Controllers\Api\User\FollowController;
+use App\Http\Controllers\Api\User\LessonController;
 use App\Http\Controllers\Api\User\UserCategoryController;
 
 /*
@@ -38,6 +39,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('/', UserController::class)->except(['store', 'destroy']);
     Route::apiResource('follow', FollowController::class)->only(['index', 'store', 'destroy']);
     Route::apiResource('category', UserCategoryController::class)->only(['index']);
+    Route::apiResource('category.lesson', LessonController::class)->except(['update', 'destroy']);
     Route::get('activity-logs', [ActivityLogsController::class, 'index']);
   });
 });

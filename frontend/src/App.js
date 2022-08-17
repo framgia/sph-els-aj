@@ -13,6 +13,7 @@ import UserCategories from "./pages/User/Categories/Categories";
 import Questions from "./pages/Admin/Questions/Questions";
 import UserList from "./pages/User/UserList/UserList";
 import { Roles } from "./utils/RoleConstants";
+import Lesson from "./pages/User/Lessons/Lesson";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/users" element={<UserList />} />
           <Route path="/categories" element={<UserCategories />} />
+          <Route path="/categories/lesson" element={<Lesson />} />
         </Route>
 
         <Route element={<RequireAuth role={Roles.ADMIN} />}>
