@@ -9,7 +9,7 @@ export const useUserCategories = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { data: categories, error } = useSWR(
+  const { data: categories, error, mutate } = useSWR(
     "/api/user/category",
     () =>
       axios
@@ -52,6 +52,7 @@ export const useUserCategories = () => {
   return {
     categories,
     error,
+    mutate,
     loading,
     setLoading,
     takeLesson,

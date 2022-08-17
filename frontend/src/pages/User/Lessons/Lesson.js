@@ -15,6 +15,7 @@ import { useUserQuestions } from "../../../hooks/User/questions";
 import { TabTitle } from "../../../utils/GeneralFunctions";
 import UserLayout from "../UserLayout/UserLayout";
 import Questions from "./Questions";
+import BackdropLoader from "../../../components/BackdropLoader";
 
 const LoaderBox = styled(Box)({
   display: "flex",
@@ -29,8 +30,10 @@ const Lesson = () => {
   const location = useLocation();
   const { state } = location;
   const { id, title } = state;
-  const { questions } = useUserQuestions(id);
+  const { questions, loading, setLoading, submitAnswer } = useUserQuestions(id);
   const [data, setData] = useState([]);
+
+  TabTitle(`E-Learning | ${title} Lesson`);
 
   const handleChange = (
     event,
@@ -49,12 +52,10 @@ const Lesson = () => {
     setData(newState);
   };
 
-  TabTitle(`E-Learning | ${title} Lesson`);
-
   useEffect(() => {
     if (questions) {
       const newState = questions.map(() => {
-        return { question_id: 0, option_id: 0 };
+        return { question_id: null, option_id: null };
       });
       setData(newState);
     }
@@ -62,19 +63,21 @@ const Lesson = () => {
 
   const onSubmit = () => {
     // Checks whether the user has answered all questions
-    if (data.find((item) => item.question_id === 0)) {
+    if (data.find((item) => item.question_id === null)) {
       Swal.fire({
         title: "Oppps..",
         text: "Looks like you missed some questions. Please check again.",
         icon: "warning",
       });
     } else {
-      // TODO: Will implement functionality in another task
+      setLoading(true);
+      submitAnswer({ data, category: { id, title } });
     }
   };
 
   return (
     <UserLayout>
+      <BackdropLoader loading={loading} />
       <Container maxWidth="md">
         {!questions ? (
           <LoaderBox>
