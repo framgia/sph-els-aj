@@ -26,7 +26,8 @@ use App\Http\Controllers\Api\User\UserCategoryController;
 */
 
 Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
-  return new UserResource(User::with(['type', 'avatar'])->find($request->user()->id));
+  return new UserResource(User::withCount(['following', 'followers', 'topicsLearned'])
+    ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned'])->find($request->user()->id));
 });
 
 // ADD: PROTECTION TO API
@@ -37,7 +38,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('category.question', QuestionController::class);
   });
   Route::group(['prefix' => 'user'], function () {
-    Route::apiResource('/', UserController::class)->except(['store', 'destroy']);
+    Route::apiResource('profile', UserController::class)->except(['store', 'destroy']);
     Route::apiResource('follow', FollowController::class)->only(['index', 'store', 'destroy']);
     Route::apiResource('category', UserCategoryController::class)->only(['index']);
     Route::apiResource('category.lesson', LessonController::class)->except(['update', 'destroy']);

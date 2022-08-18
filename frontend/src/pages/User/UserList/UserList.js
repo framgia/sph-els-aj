@@ -4,6 +4,7 @@ import {
   CircularProgress,
   Container,
   Divider,
+  Link,
   List,
   ListItem,
   ListItemAvatar,
@@ -13,11 +14,14 @@ import {
   Typography,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { Link as RouterLink } from "react-router-dom";
+import { useState } from "react";
 
 import UserLayout from "../UserLayout/UserLayout";
+import BackdropLoader from "../../../components/BackdropLoader";
 import { TabTitle } from "../../../utils/GeneralFunctions";
 import { useUserList } from "../../../hooks/User/users";
-import BackdropLoader from "../../../components/BackdropLoader";
+import { useFollow } from "../../../hooks/User/follow";
 
 const LoaderBox = styled(Box)({
   display: "flex",
@@ -31,8 +35,10 @@ const LoaderBox = styled(Box)({
 const UserList = () => {
   TabTitle("E-Learning System | Users");
 
-  const { users, loading, setLoading, followUser, unfollowUser } =
-    useUserList();
+  const [loading, setLoading] = useState(false);
+  const { users, mutate } = useUserList();
+
+  const { followUser, unfollowUser } = useFollow(setLoading, mutate);
 
   const handleClick = (is_followed, id) => {
     setLoading(true);
@@ -70,7 +76,16 @@ const UserList = () => {
                       <Avatar alt={name} src={avatar.url} />
                     </ListItemAvatar>
                     <ListItemText
-                      primary={name}
+                      primary={
+                        <Link
+                          component={RouterLink}
+                          to={`/users/profile/${id}`}
+                          variant="body2"
+                          sx={{ textDecoration: "none" }}
+                        >
+                          {name}
+                        </Link>
+                      }
                       secondary={
                         <Typography
                           sx={{ display: "inline" }}

@@ -37,7 +37,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
+      revalidateOnReconnect: true,
+      revalidateOnMount: true,
     }
   );
 
@@ -83,6 +84,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     registerUser,
     loginUser,
     logout,
+    isLoading: !error && !user,
     loading,
     setLoading,
   };

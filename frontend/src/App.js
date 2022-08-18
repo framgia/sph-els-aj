@@ -15,6 +15,8 @@ import UserList from "./pages/User/UserList/UserList";
 import { Roles } from "./utils/RoleConstants";
 import Lesson from "./pages/User/Lessons/Lesson";
 import Result from "./pages/User/Lessons/Results/Results";
+import AuthProfile from "./pages/User/AuthProfile/AuthProfile";
+import UserProfile from "./pages/User/UserProfile/UserProfile";
 
 const App = () => {
   return (
@@ -32,6 +34,8 @@ const App = () => {
             <Route path="/categories" element={<UserCategories />} />
             <Route path="/categories/lesson" element={<Lesson />} />
             <Route path="/categories/lesson/result" element={<Result />} />
+            <Route path="/users/profile/:id" element={<UserProfile />} />
+            <Route path="/profile" element={<AuthProfile />} />
           </Route>
 
           <Route element={<RequireAuth role={Roles.ADMIN} />}>
