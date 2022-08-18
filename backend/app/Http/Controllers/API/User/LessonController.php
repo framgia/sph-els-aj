@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\User\QuestionResource;
+use App\Models\Lesson;
 use App\Models\Category;
 use App\Models\Question;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAnswerRequest;
+use App\Http\Resources\User\QuestionResource;
+use App\Services\ActivityLogService;
 
 class LessonController extends Controller
 {
@@ -16,13 +18,14 @@ class LessonController extends Controller
       ->with('options')->get());
   }
 
-  public function store(Category $category, Request $request)
+  public function store(Category $category, StoreAnswerRequest $request)
   {
-    // TODO: Will provide functionality in another task
-  }
-
-  public function show(Category $category)
-  {
-    // TODO: Will provide functionality in another task
+    Lesson::create([
+      'category_id' => $category->id,
+      'user_id' => auth()->user()->id
+    ])->answers()->createMany($request->validated());
+    ActivityLogService::logLearned($category, $request->validated());
+    
+    return response()->noContent();
   }
 }

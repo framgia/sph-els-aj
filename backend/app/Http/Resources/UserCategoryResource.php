@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\User;
+namespace App\Http\Resources;
 
-use App\Http\Resources\OptionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LessonResource extends JsonResource
+class UserCategoryResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -16,10 +15,10 @@ class LessonResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id' => $this->question_id,
-      'question' => new QuestionResource($this->whenLoaded('question')),
-      'answer' => new OptionResource($this->whenLoaded('option')),
-      'is_correct' => $this->is_correct,
+      'id' => $this->id,
+      'title' => $this->title,
+      'description' => $this->description,
+      'is_taken' => $this->lessons()->where('user_id', auth()->user()->id)->exists(),
       'created_at' => $this->created_at,
       'updated_at' => $this->updated_at
     ];

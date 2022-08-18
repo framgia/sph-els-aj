@@ -16,20 +16,34 @@ class AuthActivityLogsResource extends JsonResource
    */
   public function toArray($request)
   {
-    $desc = $this->getUser($this->loggable_id) . " ";
-    $desc .= $this->activity_description . " ";
-    if ($this->loggable_type === "App\Models\User") {
-      $desc .= $this->getUser($this->activity_id);
+    $description = $this->getUser($this->loggable_id)['name'] . " ";
+    $description .= $this->activity_description;
+    if ($this->activity_type === "Follow") {
+      $description .= ' ' . $this->getUser($this->activity_id)['name'];
     }
-
+    
     return [
-      'description' => $desc
+      'avatar' => $this->getUser($this->loggable_id)['avatar'],
+      'description' => $description,
+      'created_at' => \Carbon\Carbon::parse($this->created_at)->diffForHumans()
     ];
   }
 
   public function getUser($id)
   {
-    return $id === auth()->user()->id ? "You" :
-      User::find($id)->name;
+    if ($id === auth()->user()->id) {
+      $name = 'You';
+      $avatar = auth()->user()->media()
+      ->where('collection_name', 'avatar')->first()->getUrl();
+    } else {
+      $user = User::find($id);
+      $name = $user->name;
+      $avatar = $user->media()->where('collection_name', 'avatar')->first()->getUrl();
+    }
+
+    return [
+      'name' => $name,
+      'avatar' => $avatar,
+    ];      
   }
 }

@@ -20,6 +20,7 @@ class Category extends Model
   }
 
   public function lessons() {
-    return $this->belongsToMany(User::class, 'lessons', 'category_id', 'user_id');
+    return $this->belongsToMany(User::class, 'lessons', 'category_id', 'user_id')
+    ->withTimestamps();
   }
 }

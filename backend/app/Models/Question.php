@@ -20,4 +20,9 @@ class Question extends Model
   {
     return $this->belongsTo(Category::class);
   }
+
+  public function lesson()
+  {
+    return $this->belongsToMany(Lesson::class, 'user_answers', 'question_id', 'lesson_id');
+  }
 }
