@@ -1,9 +1,10 @@
 import { Box, Divider, Grid, styled, Typography } from "@mui/material";
 import MuiPaper from "@mui/material/Paper";
-import FormInput from "../../../components/FormInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+
+import FormInput from "../../../components/FormInput";
 import { useSettings } from "../../../hooks/User/settings";
 import { PasswordSchema } from "./FormSchema";
 
