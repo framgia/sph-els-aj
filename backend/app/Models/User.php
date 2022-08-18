@@ -80,4 +80,19 @@ class User extends Authenticatable implements HasMedia
   {
     return $this->belongsToMany(Category::class, 'lessons', 'user_id', 'category_id');
   }
+
+  public function answers()
+  {
+    return $this->hasManyThrough(UserAnswer::class, Lesson::class);
+  }
+
+  public function topicsLearned()
+  {
+    return $this->answers()->where('is_correct', 1);
+  }
+
+  public function isFollowed($id)
+  {
+    return $this->following()->find($id) !== null;
+  }
 }

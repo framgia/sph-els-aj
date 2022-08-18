@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Skeleton,
@@ -9,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import { useAuth } from "../../../../hooks/auth";
 
@@ -58,9 +60,11 @@ const UserNavItem = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map(({ text }) => (
+        {settings.map(({ text, path }) => (
           <MenuItem key={text}>
-            <Typography textAlign="center">{text}</Typography>
+            <Link component={RouterLink} to={path} variant="body2">
+              {text}
+            </Link>
           </MenuItem>
         ))}
         <MenuItem onClick={logout}>

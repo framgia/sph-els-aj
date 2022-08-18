@@ -5,7 +5,7 @@ namespace App\Http\Resources\User;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthActivityLogsResource extends JsonResource
+class ProfileActivityLogsResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -15,34 +15,24 @@ class AuthActivityLogsResource extends JsonResource
    */
   public function toArray($request)
   {
-    $description = $this->getUser($this->loggable_id)['name'] . " ";
+    $description = $this->getUser($this->loggable_id) . " ";
     $description .= $this->activity_description;
     if ($this->activity_type === "Follow") {
-      $description .= ' ' . $this->getUser($this->activity_id)['name'];
+      $description .= ' ' . $this->getUser($this->activity_id);
     }
-    
     return [
-      'avatar' => $this->getUser($this->loggable_id)['avatar'],
+      'id' => $this->id,
       'description' => $description,
       'created_at' => \Carbon\Carbon::parse($this->created_at)->diffForHumans()
     ];
   }
 
-  public function getUser($id)
+  private function getUser($id)
   {
     if ($id === auth()->user()->id) {
-      $name = 'You';
-      $avatar = auth()->user()->media()
-      ->where('collection_name', 'avatar')->first()->getUrl();
+      return 'You';
     } else {
-      $user = User::find($id);
-      $name = $user->name;
-      $avatar = $user->media()->where('collection_name', 'avatar')->first()->getUrl();
+      return User::find($id)->name;
     }
-
-    return [
-      'name' => $name,
-      'avatar' => $avatar,
-    ];      
   }
 }
