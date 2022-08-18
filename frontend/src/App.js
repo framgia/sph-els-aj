@@ -17,6 +17,7 @@ import Lesson from "./pages/User/Lessons/Lesson";
 import Result from "./pages/User/Lessons/Results/Results";
 import AuthProfile from "./pages/User/AuthProfile/AuthProfile";
 import UserProfile from "./pages/User/UserProfile/UserProfile";
+import Settings from "./pages/User/Settings/Settings";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/categories/lesson/result" element={<Result />} />
             <Route path="/users/profile/:id" element={<UserProfile />} />
             <Route path="/profile" element={<AuthProfile />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
           <Route element={<RequireAuth role={Roles.ADMIN} />}>
