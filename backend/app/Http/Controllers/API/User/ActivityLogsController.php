@@ -8,8 +8,8 @@ use App\Services\ActivityLogService;
 
 class ActivityLogsController extends Controller
 {
-    public function index()
-    {
-        return AuthActivityLogsResource::collection(ActivityLogService::getLogs());
-    }
+  public function index()
+  {
+    return AuthActivityLogsResource::collection(ActivityLogService::getLogs());
+  }
 }

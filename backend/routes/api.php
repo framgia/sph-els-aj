@@ -28,8 +28,9 @@ use App\Http\Controllers\Api\User\UserCategoryController;
 */
 
 Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
-  return new UserResource(User::withCount(['following', 'followers', 'topicsLearned'])
-    ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned'])->find($request->user()->id));
+  return new UserResource(User::withCount(['following', 'followers', 'topicsLearned', 'lessons'])
+    ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned', 'lessons'])
+    ->find($request->user()->id));
 });
 
 // ADD: PROTECTION TO API
