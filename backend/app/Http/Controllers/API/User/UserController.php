@@ -18,8 +18,8 @@ class UserController extends Controller
   public function show(User $profile)
   {
     return new UserResource(User::withCount(['following', 'followers', 'topicsLearned'])
-    ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned'])
-    ->find($profile->id));
+      ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned'])
+      ->find($profile->id));
   }
 
   public function update(UpdateUserRequest $request, User $profile)
