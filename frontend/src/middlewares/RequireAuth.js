@@ -18,7 +18,7 @@ const RequireAuth = ({ role }) => {
       setUser(res.data);
     } catch (error) {
       if (error.response.status === 401) {
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       }
     } finally {
       setLoading(false);
@@ -38,7 +38,7 @@ const RequireAuth = ({ role }) => {
     ) : user ? (
       <Navigate to="/unauthorized" state={{ from: location }} replace />
     ) : (
-      <Navigate to="/login" state={{ from: location }} replace />
+      <Navigate to="/" state={{ from: location }} replace />
     ))
   );
 };
