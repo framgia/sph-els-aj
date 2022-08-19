@@ -27,7 +27,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
           <Route element={<RequireAuth role={Roles.USER} />}>

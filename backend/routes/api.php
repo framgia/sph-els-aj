@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('profile', UserController::class)->except(['store', 'destroy']);
     Route::put('change-password', [ChangeUserPasswordController::class, 'update']);
     Route::put('change-avatar', [UpdateUserAvatarController::class, 'update']);
+    Route::get('follow/get-followers/{user}', [FollowController::class, 'getFollowers']);
+    Route::get('follow/get-following/{user}', [FollowController::class, 'getFollowing']);
     Route::apiResource('follow', FollowController::class)->only(['store', 'destroy']);
     Route::apiResource('category', UserCategoryController::class)->only(['index']);
     Route::apiResource('category.lesson', LessonController::class)->except(['update', 'destroy']);

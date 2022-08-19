@@ -132,7 +132,7 @@ export default function SignUp() {
             </SignUpBtn>
             <Grid container justifyContent="center" alignItems="center">
               <Grid item>
-                <Link component={RouterLink} to="/login" variant="body2">
+                <Link component={RouterLink} to="/" variant="body2">
                   {"Already have an account? Login"}
                 </Link>
               </Grid>
