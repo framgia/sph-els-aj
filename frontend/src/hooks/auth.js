@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useNavigate } from "react-router-dom";
-import { Toast } from "../utils/GeneralFunctions";
 
+import { Toast } from "../utils/GeneralFunctions";
 import axios from "../lib/axios";
 
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
@@ -73,7 +73,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
 
   useEffect(() => {
     if (middleware === "guest" && redirectIfAuthenticated && user) {
-      let route = user?.type?.id === 1 ? "/admin/users" : "/users";
+      let route = user?.type?.id === 1 ? "/admin/users" : "/dashboard";
       navigate(route, { replace: true, state: { user: user, open: true } });
     }
     if (middleware === "auth" && error) logout();

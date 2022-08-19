@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import RequireAuth from "./middlewares/RequireAuth";
 import SignUp from "./pages/User/SignUp/SignUp";
 import Login from "./pages/User/Login/Login";
-import UserDashboard from "./pages/User/UserDashboard";
+import UserDashboard from "./pages/User/Dashboard/UserDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import Users from "./pages/Admin/Users/Users";
 import Categories from "./pages/Admin/Categories/Categories";
