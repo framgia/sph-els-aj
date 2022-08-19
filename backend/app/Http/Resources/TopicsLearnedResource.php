@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\User\LessonResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuestionResource extends JsonResource
+class TopicsLearnedResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -16,9 +17,9 @@ class QuestionResource extends JsonResource
   {
     return [
       'id' => $this->id,
-      'value' => $this->value,
-      'options' => OptionResource::collection($this->whenLoaded('options')),
-      'correctAnswer' => new OptionResource($this->whenLoaded('isCorrectOption')->first())
+      'category' => new CategoryResource($this->whenLoaded('category')),
+      'question' => new QuestionResource($this->whenLoaded('question')),
+      'option' => new OptionResource($this->whenLoaded('option')),
     ];
   }
 }

@@ -5,13 +5,11 @@ import {
   Grid,
   styled,
   Typography,
-  Link,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
 
 import UserLayout from "../UserLayout/UserLayout";
 import DashboardProfile from "../../../components/DashboardProfile";
-import ActivitiesSection from "./ActivitiesSection";
+import TopicsList from "./TopicsList";
 import { TabTitle } from "../../../utils/GeneralFunctions";
 import { useAuth } from "../../../hooks/auth";
 
@@ -24,11 +22,11 @@ const LoaderBox = styled(Box)({
   height: "50vh",
 });
 
-const UserDashboard = () => {
+const LearnedTopics = () => {
   const { user, isLoading } = useAuth();
-  const { name, topicsLearned, lessonsLearned } = user || {};
+  const { name, topicsLearned } = user || {};
 
-  TabTitle("E-Learning System | Dashboard");
+  TabTitle("E-Learning System | Topics Learned");
 
   return (
     <UserLayout>
@@ -45,21 +43,13 @@ const UserDashboard = () => {
                   <Typography variant="subtitle2" component="div">
                     {name}
                   </Typography>
-                  <Link
-                    component={RouterLink}
-                    to={`/topics-learned`}
-                    variant="caption"
-                    sx={{ textDecoration: "none" }}
-                  >
-                    Learned {topicsLearned} topic(s)
-                  </Link>
                   <Typography variant="caption" display="block">
-                    Learned {lessonsLearned} lessons(s)
+                    Learned {topicsLearned} topic(s)
                   </Typography>
                 </DashboardProfile>
               </Grid>
               <Grid item xs={12} md={8} sx={{ flexGrow: 1 }}>
-                <ActivitiesSection />
+                <TopicsList />
               </Grid>
             </>
           )}
@@ -69,4 +59,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default LearnedTopics;

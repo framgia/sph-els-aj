@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\User\LessonController;
 use App\Http\Controllers\Api\User\LessonResultController;
 use App\Http\Controllers\Api\User\UpdateUserAvatarController;
 use App\Http\Controllers\Api\User\UserCategoryController;
+use App\Http\Controllers\TopicsLearnedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,5 +50,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResource('category.lesson', LessonController::class)->except(['update', 'destroy']);
     Route::get('activity-logs', [ActivityLogsController::class, 'index']);
     Route::apiResource('lesson-result', LessonResultController::class)->only(['show']);
+    Route::get('topics-learned', [TopicsLearnedController::class, 'index']);
   });
 });
