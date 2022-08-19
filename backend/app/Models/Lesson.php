@@ -15,4 +15,9 @@ class Lesson extends Model
   {
     return $this->hasMany(UserAnswer::class);
   }
+
+  public function category()
+  {
+    return $this->belongsTo(Category::class);
+  }
 }

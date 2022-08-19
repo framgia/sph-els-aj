@@ -18,6 +18,7 @@ import Result from "./pages/User/Lessons/Results/Results";
 import AuthProfile from "./pages/User/AuthProfile/AuthProfile";
 import UserProfile from "./pages/User/UserProfile/UserProfile";
 import Settings from "./pages/User/Settings/Settings";
+import LearnedTopics from "./pages/User/LearnedTopics/LearnedTopics";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
 
           <Route element={<RequireAuth role={Roles.USER} />}>
             <Route path="/dashboard" element={<UserDashboard />} />
+            <Route path="/topics-learned" element={<LearnedTopics />} />
             <Route path="/users" element={<UserList />} />
             <Route path="/categories" element={<UserCategories />} />
             <Route path="/categories/lesson" element={<Lesson />} />

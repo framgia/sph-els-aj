@@ -25,4 +25,9 @@ class Question extends Model
   {
     return $this->belongsToMany(Lesson::class, 'user_answers', 'question_id', 'lesson_id');
   }
+
+  public function isCorrectOption()
+  {
+    return $this->options()->where('is_correct', 1);
+  }
 }

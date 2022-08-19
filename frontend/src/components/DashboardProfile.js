@@ -13,7 +13,7 @@ const ProfileSection = ({ user, children }) => {
       alignItems="center"
       sx={{ maxHeight: 150 }}
     >
-      <Typography sx={{ mr: 14 }} variant="h6">
+      <Typography variant="h6" textAlign="center">
         Dashboard
       </Typography>
       <Grid container alignItems="center" justifyContent="center" mt={1}>

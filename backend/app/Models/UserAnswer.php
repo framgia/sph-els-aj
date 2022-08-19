@@ -25,4 +25,9 @@ class UserAnswer extends Model
   {
     return $this->belongsTo(Lesson::class, 'lesson_id', 'id');
   }
+
+  public function category()
+  {
+    return $this->hasOneThrough(Category::class, Lesson::class, 'id', 'id', 'lesson_id', 'category_id');
+  }
 }

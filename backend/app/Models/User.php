@@ -88,7 +88,7 @@ class User extends Authenticatable implements HasMedia
 
   public function topicsLearned()
   {
-    return $this->answers()->where('is_correct', 1);
+    return $this->answers();
   }
 
   public function isFollowed($id)
