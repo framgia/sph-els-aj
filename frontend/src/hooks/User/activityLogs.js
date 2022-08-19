@@ -11,7 +11,7 @@ export const useActivityLogs = () => {
     revalidateOnMount: true,
   };
 
-  const { data, error } = useSWR(`/api/user/activity-logs`, fetcher, options);
+  const { data, error } = useSWR("/api/user/activity-logs", fetcher, options);
 
   return {
     activityLogs: data,
