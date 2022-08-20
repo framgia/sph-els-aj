@@ -7,6 +7,7 @@ import SignUp from "./pages/User/SignUp/SignUp";
 import Login from "./pages/User/Login/Login";
 import UserDashboard from "./pages/User/Dashboard/UserDashboard";
 import Unauthorized from "./pages/Unauthorized";
+import PageNotFound from "./pages/PageNotFound";
 import Users from "./pages/Admin/Users/Users";
 import Categories from "./pages/Admin/Categories/Categories";
 import UserCategories from "./pages/User/Categories/Categories";
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="*" element={<PageNotFound />} />
 
           <Route element={<RequireAuth role={Roles.USER} />}>
             <Route path="/dashboard" element={<UserDashboard />} />
