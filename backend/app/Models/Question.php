@@ -28,6 +28,6 @@ class Question extends Model
 
   public function isCorrectOption()
   {
-    return $this->options()->where('is_correct', 1);
+    return $this->hasOne(Option::class)->where('is_correct', 1);
   }
 }

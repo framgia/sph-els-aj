@@ -18,7 +18,7 @@ class QuestionResource extends JsonResource
       'id' => $this->id,
       'value' => $this->value,
       'options' => OptionResource::collection($this->whenLoaded('options')),
-      'correctAnswer' => new OptionResource($this->whenLoaded('isCorrectOption')->first())
+      'correctAnswer' => new OptionResource($this->whenLoaded('isCorrectOption'))
     ];
   }
 }

@@ -23,4 +23,10 @@ class Category extends Model
     return $this->belongsToMany(User::class, 'lessons', 'category_id', 'user_id')
     ->withTimestamps();
   }
+
+  public function isCategoryTaken()
+  {
+    return $this->hasOne(Lesson::class)
+      ->where('user_id', auth()->user()->id);
+  }
 }

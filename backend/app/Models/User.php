@@ -73,7 +73,7 @@ class User extends Authenticatable implements HasMedia
 
   public function activityLogs()
   {
-    return $this->morphMany(ActivityLog::class, 'loggable');
+    return $this->morphMany(ActivityLog::class, 'loggable')->orderByDesc('created_at');
   }
 
   public function lessons()
@@ -83,7 +83,7 @@ class User extends Authenticatable implements HasMedia
 
   public function answers()
   {
-    return $this->hasManyThrough(UserAnswer::class, Lesson::class);
+    return $this->hasManyThrough(UserAnswer::class, Lesson::class)->orderByDesc('created_at');
   }
 
   public function topicsLearned()
@@ -91,8 +91,9 @@ class User extends Authenticatable implements HasMedia
     return $this->answers();
   }
 
-  public function isFollowed($id)
+  public function isFollowed()
   {
-    return $this->following()->find($id) !== null;
+    return $this->hasOne(UserFollow::class, 'following_id', 'id')
+      ->where('follower_id', auth()->user()->id);
   }
 }

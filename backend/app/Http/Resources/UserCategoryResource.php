@@ -18,7 +18,8 @@ class UserCategoryResource extends JsonResource
       'id' => $this->id,
       'title' => $this->title,
       'description' => $this->description,
-      'is_taken' => $this->lessons()->where('user_id', auth()->user()->id)->exists(),
+      'is_taken' => !empty($this->whenLoaded('isCategoryTaken')),
+      'questions' => $this->when(isset($this->questions_count), $this->questions_count),
       'created_at' => $this->created_at,
       'updated_at' => $this->updated_at
     ];

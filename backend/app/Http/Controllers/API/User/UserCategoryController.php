@@ -10,6 +10,6 @@ class UserCategoryController extends Controller
 {
   public function index()
   {
-    return UserCategoryResource::collection(Category::orderBy('created_at', 'desc')->get());
+    return UserCategoryResource::collection(Category::withCount('questions')->with('isCategoryTaken')->orderByDesc('created_at')->get());
   }
 }

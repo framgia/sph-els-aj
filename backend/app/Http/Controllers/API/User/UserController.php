@@ -11,14 +11,14 @@ class UserController extends Controller
 {
   public function index()
   {
-    return UserResource::collection(User::with(['type', 'avatar', 'following'])
+    return UserResource::collection(User::with(['type', 'avatar', 'isFollowed'])
       ->whereNot('type_id', 1)->whereNot('id', auth()->user()->id)->get());
   }
 
   public function show(User $profile)
   {
-    return new UserResource(User::withCount(['following', 'followers', 'topicsLearned'])
-      ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned'])
+    return new UserResource(User::withCount(['following', 'followers', 'answers'])
+      ->with(['type', 'avatar', 'isFollowed', 'activityLogs'])
       ->find($profile->id));
   }
 
