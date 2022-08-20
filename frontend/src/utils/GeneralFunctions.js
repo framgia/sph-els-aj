@@ -1,6 +1,11 @@
+import { useEffect } from "react";
+
 import { toast } from "react-toastify";
+
 export const TabTitle = (title) => {
-  return (document.title = title);
+  useEffect(() => {
+    document.title = title;
+  }, []);
 };
 
 export const Toast = (message, type) => {
