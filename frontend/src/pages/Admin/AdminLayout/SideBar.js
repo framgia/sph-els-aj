@@ -17,6 +17,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { MainListItems, SecondaryListItems } from "./ListItems";
 import { useAuth } from "../../../hooks/auth";
+import BackdropLoader from "../../../components/BackdropLoader";
+import { useState } from "react";
 
 const DRAWER_WIDTH = 240;
 
@@ -54,9 +56,16 @@ export default function SideBar({ open, toggleDrawer }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuth({ middleware: "auth" });
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    setLoading(true);
+    logout();
+  };
 
   return (
     <Drawer variant="permanent" open={open}>
+      <BackdropLoader loading={loading} />
       <Toolbar
         sx={{
           display: "flex",
@@ -87,7 +96,7 @@ export default function SideBar({ open, toggleDrawer }) {
           </SideBarListItems>
         ))}
         <Divider sx={{ my: 1 }} />
-        <ListItemButton onClick={logout}>
+        <ListItemButton onClick={() => handleClick()}>
           <ListItemIcon>{SecondaryListItems.icon}</ListItemIcon>
           <ListItemText primary={SecondaryListItems.text} />
         </ListItemButton>
