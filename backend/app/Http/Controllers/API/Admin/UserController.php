@@ -10,6 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return UserResource::collection(User::with(['type', 'avatar'])->get());
+        return UserResource::collection(User::with(['type', 'avatar'])
+        ->whereNot('id', auth()->user()->id)->get());
     }
 }

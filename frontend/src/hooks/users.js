@@ -8,6 +8,7 @@ export const useUserList = () => {
     error,
     mutate,
     loading,
+    isValidating,
   } = useSWR(
     "/api/admin/user",
     () =>
@@ -29,5 +30,6 @@ export const useUserList = () => {
     error,
     mutate,
     loading,
+    isValidating,
   };
 };

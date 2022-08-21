@@ -1,90 +1,55 @@
-import {
-  Avatar,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Avatar, Grid, Typography } from "@mui/material";
+import MaterialTable from "material-table";
 import moment from "moment";
 
-import { TableContainer, TableHeaderCell } from "./Styles";
-import TableSkeleton from "./TableSkeleton";
-import { HeadCells } from "./TableHeaders";
+import { tableIcons } from "../../../../utils/TableIcons";
 import { useUserList } from "../../../../hooks/users";
+import { TabTitle } from "../../../../utils/GeneralFunctions";
 
-export default function UserTable() {
-  const { users } = useUserList();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+const UserTable = () => {
+  TabTitle("E-Learning System | User List");
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const { users, isValidating } = useUserList();
+  const columns = [
+    {
+      title: "Name",
+      field: "name",
+      render: ({ name, avatar: { url } }) => (
+        <Grid
+          container
+          sx={{ display: "flex", alignItems: "center" }}
+          spacing={2}
+        >
+          <Grid item lg={2}>
+            <Avatar alt={name} src={url} />
+          </Grid>
+          <Grid item lg={10}>
+            <Typography>{name}</Typography>
+          </Grid>
+        </Grid>
+      ),
+    },
+    { title: "Email", field: "email" },
+    {
+      title: "Date Registered",
+      field: "created_at",
+      render: (rowData) => (
+        <Typography>
+          {moment(rowData.created_at).format("MMMM Do YYYY")}
+        </Typography>
+      ),
+    },
+  ];
 
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              {HeadCells.map((cell) => (
-                <TableHeaderCell key={cell.text}>{cell.text}</TableHeaderCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!users ? (
-              <TableSkeleton />
-            ) : (
-              users
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => (
-                  <TableRow hover key={user.name}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell component="th" scope="row">
-                      <Grid
-                        container
-                        sx={{ display: "flex", alignItems: "center" }}
-                        spacing={2}
-                      >
-                        <Grid item lg={2}>
-                          <Avatar alt={user.name} src={user.avatar.url} />
-                        </Grid>
-                        <Grid item lg={10}>
-                          <Typography>{user.name}</Typography>
-                        </Grid>
-                      </Grid>
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {moment(user.created_at).format("MMMM Do YYYY")}
-                    </TableCell>
-                  </TableRow>
-                ))
-            )}
-          </TableBody>
-        </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 15]}
-          component="div"
-          count={!users ? 0 : users?.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </TableContainer>
-    </>
+    <MaterialTable
+      icons={tableIcons}
+      title="User List Table"
+      columns={columns}
+      data={users}
+      isLoading={isValidating}
+    />
   );
-}
+};
+
+export default UserTable;
