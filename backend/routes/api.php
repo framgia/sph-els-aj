@@ -29,8 +29,8 @@ use App\Http\Controllers\TopicsLearnedController;
 */
 
 Route::middleware(['auth:sanctum'])->get('/auth', function (Request $request) {
-  return new UserResource(User::withCount(['following', 'followers', 'topicsLearned', 'lessons'])
-    ->with(['type', 'avatar', 'followers', 'following', 'activityLogs', 'topicsLearned', 'lessons'])
+  return new UserResource(User::withCount(['following', 'followers', 'answers', 'lessons'])
+    ->with(['type', 'avatar', 'activityLogs'])
     ->find($request->user()->id));
 });
 

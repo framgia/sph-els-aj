@@ -22,6 +22,7 @@ export const useUserCategories = () => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: true,
+      revalidateOnMount: true,
     }
   );
 
