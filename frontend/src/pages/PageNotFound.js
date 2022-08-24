@@ -13,7 +13,7 @@ export const Box = styled(MuiBox)({
 });
 
 const Unauthorized = () => {
-  TabTitle("Error | Unauthorized");
+  TabTitle("Error | Page Not Found");
 
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const Unauthorized = () => {
       <CssBaseline />
       <Typography variant="h1">Oops!</Typography>
       <Typography variant="h6">
-        401 - You are Unauthorized to access this page.
+        404 - We coudn't find this page.
       </Typography>
       <Button variant="contained" sx={{ mt: 2 }} onClick={() => navigate(-1)}>
         Back
