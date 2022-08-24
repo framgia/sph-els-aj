@@ -1,16 +1,20 @@
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Box, Container, CssBaseline, Grid, Toolbar } from "@mui/material";
+import createPersistedState from "use-persisted-state";
 
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
+import useWindowSize from "../../../hooks/windowSize";
+
+const useDrawerState = createPersistedState("drawerState");
 
 const mdTheme = createTheme();
 
-function Layout({ children, navTitle }) {
+const Layout = ({ children, navTitle }) => {
   const location = useLocation();
-  const [open, setOpen] = useState(location?.state?.open);
+  const [open, setOpen] = useDrawerState(location?.state?.open);
+  useWindowSize(setOpen);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -54,8 +58,10 @@ function Layout({ children, navTitle }) {
       </Box>
     </ThemeProvider>
   );
-}
+};
 
-export default function AdminLayout({ children, navTitle }) {
+const AdminLayout = ({ children, navTitle }) => {
   return <Layout navTitle={navTitle}>{children}</Layout>;
-}
+};
+
+export default AdminLayout;

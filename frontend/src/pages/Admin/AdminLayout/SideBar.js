@@ -5,15 +5,17 @@ import {
   Divider,
   IconButton,
   List,
+  ListItem,
+  ListItemAvatar,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Skeleton,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { School, ChevronLeft } from "@mui/icons-material";
-
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { MainListItems, SecondaryListItems } from "./ListItems";
 import { useAuth } from "../../../hooks/auth";
@@ -26,6 +28,7 @@ const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
+    zIndex: theme.zIndex.drawer - 4,
     position: "relative",
     whiteSpace: "nowrap",
     width: DRAWER_WIDTH,
@@ -41,7 +44,7 @@ const Drawer = styled(MuiDrawer, {
         duration: theme.transitions.duration.leavingScreen,
       }),
       width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("xs")]: {
         width: theme.spacing(9),
       },
     }),
@@ -54,8 +57,8 @@ const SideBarListItems = styled(ListItemButton)(({ path, location }) => ({
 
 export default function SideBar({ open, toggleDrawer }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { logout } = useAuth({ middleware: "auth" });
+  const { user, logout } = useAuth({ middleware: "auth" });
+  const { name, type, avatar } = user || {};
   const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
@@ -74,7 +77,7 @@ export default function SideBar({ open, toggleDrawer }) {
           px: [1],
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+        <Avatar sx={{ mr: 1, bgcolor: "primary.main" }}>
           <School />
         </Avatar>
         <Typography sx={{ fontWeight: "bold" }}>E-Learning System</Typography>
@@ -84,12 +87,36 @@ export default function SideBar({ open, toggleDrawer }) {
       </Toolbar>
       <Divider />
       <List component="nav">
+        {!user ? (
+          <ListItem>
+            <ListItemIcon>
+              <Skeleton variant="circular" width={40} height={40} />
+            </ListItemIcon>
+            <ListItemText
+              primary={<Skeleton variant="text" sx={{ fontSize: "1rem" }} />}
+              secondary={
+                <Skeleton
+                  variant="text"
+                  width="50%"
+                  sx={{ fontSize: "1rem" }}
+                />
+              }
+            />
+          </ListItem>
+        ) : (
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar alt={name} src={avatar.url} />
+            </ListItemAvatar>
+            <ListItemText primary={name} secondary={type.name} />
+          </ListItem>
+        )}
+        <Divider />
         {MainListItems.map((item) => (
           <SideBarListItems
             key={item.text}
-            onClick={() => navigate(item.path, { state: { open: open } })}
+            onClick={() => navigate(item.path)}
             path={item.path}
-            location={location?.pathname}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
