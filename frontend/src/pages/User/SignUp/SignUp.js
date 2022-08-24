@@ -16,8 +16,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../../hooks/auth";
 import { CustomBox, CustomAvatar, FormBox, SignUpBtn } from "./Styles";
 import { schema } from "./FormSchema";
+import { TabTitle } from "../../../utils/GeneralFunctions";
 
 export default function SignUp() {
+  TabTitle("E-Learning System | Signup");
+
   const { registerUser, loading, setLoading } = useAuth({
     middleware: "guest",
     redirectIfAuthenticated: true,
