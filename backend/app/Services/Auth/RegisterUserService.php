@@ -4,7 +4,6 @@ namespace App\Services\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterUserService
 {
@@ -26,11 +25,9 @@ class RegisterUserService
         $this->user = User::create($this->info);
 
         // Store a default avatar
-        $this->user->addMedia(public_path('avatar\default.png'))
-            ->preservingOriginal()->toMediaCollection('avatar');
+        $this->user->addMedia(public_path('avatar/default.png'))
+            ->preservingOriginal()->toMediaCollection('avatar', 'public');
         
-        Auth::login($this->user);
-
         event(new Registered($this->user));
     }
 }
