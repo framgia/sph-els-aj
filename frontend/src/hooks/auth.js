@@ -42,7 +42,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     }
   );
 
-  const csrf = () => axios.get("sanctum/csrf-cookie");
+  const csrf = () => axios.get("/sanctum/csrf-cookie");
 
   const registerUser = async ({ setError, data }) => {
     try {

@@ -43,8 +43,8 @@ class UserFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (User $user) {
-            $user->addMedia(public_path("avatar\avatar-". fake()->numberBetween(1, 26) . ".jpg"))
-                ->preservingOriginal()->toMediaCollection('avatar');
+            $user->addMedia(public_path("avatar/avatar-". fake()->numberBetween(1, 26) . ".jpg"))
+                ->preservingOriginal()->toMediaCollection('avatar', 'public');
         });
     }
 }

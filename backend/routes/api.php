@@ -1,20 +1,20 @@
 <?php
 
-use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\QuestionController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Api\User\ActivityLogsController;
-use App\Http\Controllers\Api\User\ChangeUserPasswordController;
-use App\Http\Controllers\Api\User\FollowController;
-use App\Http\Controllers\Api\User\LessonController;
-use App\Http\Controllers\Api\User\LessonResultController;
-use App\Http\Controllers\Api\User\UpdateUserAvatarController;
-use App\Http\Controllers\Api\User\UserCategoryController;
+use App\Http\Controllers\API\User\ActivityLogsController;
+use App\Http\Controllers\API\User\ChangeUserPasswordController;
+use App\Http\Controllers\API\User\FollowController;
+use App\Http\Controllers\API\User\LessonController;
+use App\Http\Controllers\API\User\LessonResultController;
+use App\Http\Controllers\API\User\UpdateUserAvatarController;
+use App\Http\Controllers\API\User\UserCategoryController;
 use App\Http\Controllers\TopicsLearnedController;
 
 /*
